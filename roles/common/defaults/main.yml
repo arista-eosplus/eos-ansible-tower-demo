@@ -1,0 +1,4 @@
+---
+# defaults file for common
+
+ip_routing_enabled: no

@@ -1,0 +1,17 @@
+---
+- name: Configure Arista EOS interfaces
+  eos_interface:
+    name={{ item.name }}
+    description="{{ item.description|default(omit) }}"
+    enable={{ item.enable|default(omit) }}
+    username={{ eapi.username|default(omit) }}
+    password={{ eapi.password|default(omit) }}
+    enablepwd={{ eapi.enablepwd|default(omit) }}
+    transport={{ eapi.transport|default(omit) }}
+    connection={{ eapi.connection|default(omit) }}
+    config={{ eapi.config|default(omit) }}
+    host={{ host_addr|default(omit) }}
+    port={{ eapi.port|default(omit) }}
+    debug={{ eos.debug|default(omit) }}
+  with_items: interfaces
+  when: interfaces is defined

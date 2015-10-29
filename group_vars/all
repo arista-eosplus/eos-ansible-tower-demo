@@ -1,0 +1,8 @@
+---
+# make ansible play nice in a virtualenv
+ansible_python_interpreter: python
+
+eapi:
+  username: admin
+  password: admin
+  transport: http

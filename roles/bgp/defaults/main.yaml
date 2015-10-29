@@ -1,0 +1,6 @@
+---
+bgp:
+  enable: no
+
+purge_bgp_networks: no
+purge_bgp_neighbors: no

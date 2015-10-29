@@ -1,0 +1,154 @@
+---
+- name: configure BGP global parameters
+  eos_bgp_config:
+    bgp_as={{ bgp.bgp_as|default(omit) }}
+    enable={{ bgp.enable|default(omit) }}
+    router_id={{ bgp.router_id|default(omit) }}
+    username={{ eapi.username|default(omit) }}
+    password={{ eapi.password|default(omit) }}
+    enablepwd={{ eapi.enablepwd|default(omit) }}
+    transport={{ eapi.transport|default(omit) }}
+    connection={{ eapi.connection|default(omit) }}
+    config={{ eapi.config|default(omit) }}
+    host={{ host_addr|default(omit) }}
+    port={{ eapi.port|default(omit) }}
+    debug={{ eos.debug|default(omit) }}
+  when: bgp is defined and bgp.enable
+
+- name: configure BGP neighbors
+  eos_bgp_neighbor:
+    name={{ item.name }}
+    remote_as={{ item.remote_as|default(omit) }}
+    enable={{ item.enable|default(omit) }}
+    description={{ item.description|default(omit) }}
+    next_hop_self={{ item.next_hop_self|default(omit) }}
+    peer_group={{ item.peer_group|default(omit) }}
+    route_map_in={{ item.route_map_in|default(omit) }}
+    route_map_out={{ item.route_map_out|default(omit) }}
+    send_community={{ item.send_community|default(omit) }}
+    username={{ eapi.username|default(omit) }}
+    password={{ eapi.password|default(omit) }}
+    enablepwd={{ eapi.enablepwd|default(omit) }}
+    transport={{ eapi.transport|default(omit) }}
+    connection={{ eapi.connection|default(omit) }}
+    config={{ eapi.config|default(omit) }}
+    host={{ host_addr|default(omit) }}
+    port={{ eapi.port|default(omit) }}
+    debug={{ eos.debug|default(omit) }}
+  with_items: bgp.neighbors
+  when: bgp.neighbors is defined and bgp.enable
+  register: eos_bgp_neighbor_result
+
+- name: set BGP redistribute setting
+  eos_config:
+    section='router bgp {{ bgp.bgp_as }}'
+    regexp='(?<!no )redistribute {{ bgp.redistribute }}'
+    command='redistribute {{ bgp.redistribute }}'
+    username={{ eapi.username|default(omit) }}
+    password={{ eapi.password|default(omit) }}
+    enablepwd={{ eapi.enablepwd|default(omit) }}
+    transport={{ eapi.transport|default(omit) }}
+    connection={{ eapi.connection|default(omit) }}
+    config={{ eapi.config|default(omit) }}
+    host={{ host_addr|default(omit) }}
+    port={{ eapi.port|default(omit) }}
+    debug={{ eos.debug|default(omit) }}
+  when: bgp.redistribute is defined and bgp.enable
+
+- name: set BGP log neighbor changes
+  eos_config:
+    section='router bgp {{ bgp.bgp_as }}'
+    regexp='(?<!no )bgp log-neighbor-changes'
+    command='bgp log-neighbor-changes'
+    username={{ eapi.username|default(omit) }}
+    password={{ eapi.password|default(omit) }}
+    enablepwd={{ eapi.enablepwd|default(omit) }}
+    transport={{ eapi.transport|default(omit) }}
+    connection={{ eapi.connection|default(omit) }}
+    config={{ eapi.config|default(omit) }}
+    host={{ host_addr|default(omit) }}
+    port={{ eapi.port|default(omit) }}
+    debug={{ eos.debug|default(omit) }}
+  when: bgp.log_neighbor_changes and bgp.enable
+  register: bgp_output
+
+- name: set BGP timers
+  eos_config:
+    section='router bgp {{ bgp.bgp_as }}'
+    command='timers bgp {{ bgp.timers.keep_alive }} {{ bgp.timers.hold }}'
+    username={{ eapi.username|default(omit) }}
+    password={{ eapi.password|default(omit) }}
+    enablepwd={{ eapi.enablepwd|default(omit) }}
+    transport={{ eapi.transport|default(omit) }}
+    connection={{ eapi.connection|default(omit) }}
+    config={{ eapi.config|default(omit) }}
+    host={{ host_addr|default(omit) }}
+    port={{ eapi.port|default(omit) }}
+    debug={{ eos.debug|default(omit) }}
+  when: bgp.timers is defined and bgp.enable
+
+- name: set BGP listeners
+  eos_config:
+    section='router bgp {{ bgp.bgp_as }}'
+    command='bgp listen range {{ item.name }} peer-group {{ item.peer_group }} remote-as {{ item.remote_as }}'
+    username={{ eapi.username|default(omit) }}
+    password={{ eapi.password|default(omit) }}
+    enablepwd={{ eapi.enablepwd|default(omit) }}
+    transport={{ eapi.transport|default(omit) }}
+    connection={{ eapi.connection|default(omit) }}
+    config={{ eapi.config|default(omit) }}
+    host={{ host_addr|default(omit) }}
+    port={{ eapi.port|default(omit) }}
+    debug={{ eos.debug|default(omit) }}
+  when: bgp is defined and bgp.enable and bgp.listeners
+  with_items: bgp.listeners | default([])
+
+- name: purge BGP neighbors
+  eos_purge:
+    resource=eos_bgp_neighbor
+    results='{{ eos_bgp_neighbor_result|to_nice_json }}'
+    username={{ eapi.username|default(omit) }}
+    password={{ eapi.password|default(omit) }}
+    enablepwd={{ eapi.enablepwd|default(omit) }}
+    transport={{ eapi.transport|default(omit) }}
+    connection={{ eapi.connection|default(omit) }}
+    config={{ eapi.config|default(omit) }}
+    host={{ host_addr|default(omit) }}
+    port={{ eapi.port|default(omit) }}
+    debug={{ eos.debug|default(omit) }}
+  when: eos_bgp_neighbor_result is defined and
+        (bgp.enable and purge_bgp_neighbors)
+
+- name: configure BGP networks
+  eos_bgp_network:
+    prefix={{ item.prefix }}
+    masklen={{ item.masklen }}
+    route_map={{ item.route_map|default(omit) }}
+    username={{ eapi.username|default(omit) }}
+    password={{ eapi.password|default(omit) }}
+    enablepwd={{ eapi.enablepwd|default(omit) }}
+    transport={{ eapi.transport|default(omit) }}
+    connection={{ eapi.connection|default(omit) }}
+    config={{ eapi.config|default(omit) }}
+    host={{ host_addr|default(omit) }}
+    port={{ eapi.port|default(omit) }}
+    debug={{ eos.debug|default(omit) }}
+  with_items: bgp.networks
+  when: bgp.networks is defined and bgp.enable
+  register: eos_bgp_network_result
+
+- name: purge BGP networks
+  eos_purge:
+    resource=eos_bgp_network
+    results='{{ eos_bgp_network_result|to_nice_json }}'
+    username={{ eapi.username|default(omit) }}
+    password={{ eapi.password|default(omit) }}
+    enablepwd={{ eapi.enablepwd|default(omit) }}
+    transport={{ eapi.transport|default(omit) }}
+    connection={{ eapi.connection|default(omit) }}
+    config={{ eapi.config|default(omit) }}
+    host={{ host_addr|default(omit) }}
+    port={{ eapi.port|default(omit) }}
+    debug={{ eos.debug|default(omit) }}
+  when: eos_bgp_network_result is defined and
+        (bgp.enable and purge_bgp_networks)

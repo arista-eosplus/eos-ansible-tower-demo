@@ -1,0 +1,29 @@
+---
+- name: Configure Arista EOS hostname
+  eos_system:
+    hostname={{ hostname }}
+    username={{ eapi.username|default(omit) }}
+    password={{ eapi.password|default(omit) }}
+    enablepwd={{ eapi.enablepwd|default(omit) }}
+    transport={{ eapi.transport|default(omit) }}
+    connection={{ eapi.connection|default(omit) }}
+    config={{ eapi.config|default(omit) }}
+    host={{ host_addr|default(omit) }}
+    port={{ eapi.port|default(omit) }}
+    debug={{ eos.debug|default(omit) }}
+  when: hostname is defined
+
+- name: set ip routing
+  eos_config:
+    section='ip routing'
+    command='ip routing'
+    username={{ eapi.username|default(omit) }}
+    password={{ eapi.password|default(omit) }}
+    enablepwd={{ eapi.enablepwd|default(omit) }}
+    transport={{ eapi.transport|default(omit) }}
+    connection={{ eapi.connection|default(omit) }}
+    config={{ eapi.config|default(omit) }}
+    host={{ host_addr|default(omit) }}
+    port={{ eapi.port|default(omit) }}
+    debug={{ eos.debug|default(omit) }}
+  when: ip_routing_enabled

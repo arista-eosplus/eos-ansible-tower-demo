@@ -1,0 +1,140 @@
+---
+- name: Configure VLAN Interface for MLAG
+  eos_vlan:
+    vlanid={{ mlag.local_if_vlan | regex_replace('\D+','') }}
+    trunk_groups={{ mlag.mlag_trunk_group }}
+    username={{ eapi.username|default(omit) }}
+    password={{ eapi.password|default(omit) }}
+    enablepwd={{ eapi.enablepwd|default(omit) }}
+    transport={{ eapi.transport|default(omit) }}
+    connection={{ eapi.connection|default(omit) }}
+    config={{ eapi.config|default(omit) }}
+    host={{ host_addr|default(omit) }}
+    port={{ eapi.port|default(omit) }}
+    debug={{ eos.debug|default(omit) }}
+  when: mlag is defined
+
+- name: Create Vlan Interface for MLAG
+  eos_interface:
+    name={{ mlag.local_if_vlan }}
+    description="{{ mlag.mlag_domain_id }} SVI"
+    username={{ eapi.username|default(omit) }}
+    password={{ eapi.password|default(omit) }}
+    enablepwd={{ eapi.enablepwd|default(omit) }}
+    transport={{ eapi.transport|default(omit) }}
+    connection={{ eapi.connection|default(omit) }}
+    config={{ eapi.config|default(omit) }}
+    host={{ host_addr|default(omit) }}
+    port={{ eapi.port|default(omit) }}
+    debug={{ eos.debug|default(omit) }}
+  when: mlag is defined
+
+- name: Configure VLAN Interface IP for MLAG
+  eos_ipinterface:
+    name={{ mlag.local_if_vlan }}
+    address={{ mlag.local_if_ip_address }}
+    username={{ eapi.username|default(omit) }}
+    password={{ eapi.password|default(omit) }}
+    enablepwd={{ eapi.enablepwd|default(omit) }}
+    transport={{ eapi.transport|default(omit) }}
+    connection={{ eapi.connection|default(omit) }}
+    config={{ eapi.config|default(omit) }}
+    host={{ host_addr|default(omit) }}
+    port={{ eapi.port|default(omit) }}
+    debug={{ eos.debug|default(omit) }}
+  when: mlag is defined
+
+- name: Configure Interface Members of Port-Channel for MLAG
+  eos_interface:
+    name={{ item }}
+    description="MLAG PEER CNX - {{ mlag.mlag_domain_id }}"
+    enable={{ mlag.peer_link_enable }}
+    username={{ eapi.username|default(omit) }}
+    password={{ eapi.password|default(omit) }}
+    enablepwd={{ eapi.enablepwd|default(omit) }}
+    transport={{ eapi.transport|default(omit) }}
+    connection={{ eapi.connection|default(omit) }}
+    config={{ eapi.config|default(omit) }}
+    host={{ host_addr|default(omit) }}
+    port={{ eapi.port|default(omit) }}
+    debug={{ eos.debug|default(omit) }}
+  with_items: mlag.peer_link_members | default([])
+  when: mlag.peer_link_members
+
+- name: Configure Interface Members of Port-Channel for MLAG
+  eos_portchannel:
+    name={{ mlag.peer_link_if }}
+    members={{ mlag.peer_link_members | join(',') }}
+    lacp_mode={{ mlag.peer_link_lacp_mode }}
+    username={{ eapi.username|default(omit) }}
+    password={{ eapi.password|default(omit) }}
+    enablepwd={{ eapi.enablepwd|default(omit) }}
+    transport={{ eapi.transport|default(omit) }}
+    connection={{ eapi.connection|default(omit) }}
+    config={{ eapi.config|default(omit) }}
+    host={{ host_addr|default(omit) }}
+    port={{ eapi.port|default(omit) }}
+    debug={{ eos.debug|default(omit) }}
+  when: mlag
+
+- name: Configure switchport mode trunk on Port-Channel
+  eos_config:
+    section='interface {{ mlag.peer_link_if }}'
+    command='switchport mode trunk'
+    username={{ eapi.username|default(omit) }}
+    password={{ eapi.password|default(omit) }}
+    enablepwd={{ eapi.enablepwd|default(omit) }}
+    transport={{ eapi.transport|default(omit) }}
+    connection={{ eapi.connection|default(omit) }}
+    config={{ eapi.config|default(omit) }}
+    host={{ host_addr|default(omit) }}
+    port={{ eapi.port|default(omit) }}
+    debug={{ eos.debug|default(omit) }}
+  when: mlag
+
+- name: Configure trunk group on Port-Channel
+  eos_config:
+    section='interface {{ mlag.peer_link_if }}'
+    command='switchport trunk group {{ mlag.mlag_trunk_group }}'
+    username={{ eapi.username|default(omit) }}
+    password={{ eapi.password|default(omit) }}
+    enablepwd={{ eapi.enablepwd|default(omit) }}
+    transport={{ eapi.transport|default(omit) }}
+    connection={{ eapi.connection|default(omit) }}
+    config={{ eapi.config|default(omit) }}
+    host={{ host_addr|default(omit) }}
+    port={{ eapi.port|default(omit) }}
+    debug={{ eos.debug|default(omit) }}
+  when: mlag
+
+- name: Configure MLAG
+  eos_mlag_config:
+    domain_id={{ mlag.mlag_domain_id }}
+    local_interface={{ mlag.local_if_vlan }}
+    peer_address={{ mlag.peer_address }}
+    peer_link={{ mlag.peer_link_if }}
+    shutdown={{ mlag.mlag_shutdown }}
+    username={{ eapi.username|default(omit) }}
+    password={{ eapi.password|default(omit) }}
+    enablepwd={{ eapi.enablepwd|default(omit) }}
+    transport={{ eapi.transport|default(omit) }}
+    connection={{ eapi.connection|default(omit) }}
+    config={{ eapi.config|default(omit) }}
+    host={{ host_addr|default(omit) }}
+    port={{ eapi.port|default(omit) }}
+    debug={{ eos.debug|default(omit) }}
+  when: mlag
+
+- name: Disable Spanning Tree on MLAG Vlan
+  eos_config:
+    command='no spanning-tree vlan {{ mlag.local_if_vlan | regex_replace('\D+','') }}'
+    username={{ eapi.username|default(omit) }}
+    password={{ eapi.password|default(omit) }}
+    enablepwd={{ eapi.enablepwd|default(omit) }}
+    transport={{ eapi.transport|default(omit) }}
+    connection={{ eapi.connection|default(omit) }}
+    config={{ eapi.config|default(omit) }}
+    host={{ host_addr|default(omit) }}
+    port={{ eapi.port|default(omit) }}
+    debug={{ eos.debug|default(omit) }}
+  when: mlag.local_if_disable_spanning_tree | default(false)

@@ -1,0 +1,11 @@
+---
+- hosts: spine
+  gather_facts: no
+  connection: local
+
+  roles:
+    - common
+    - interfaces
+    - bridging
+    - ipv4
+    - bgp

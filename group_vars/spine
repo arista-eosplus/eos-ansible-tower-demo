@@ -1,0 +1,4 @@
+---
+purge_vlans: yes
+
+ip_routing_enabled: yes
