@@ -3,8 +3,6 @@
 ansible_python_interpreter: python
 
 eapi:
-  username: admin
-  password: admin
-  transport: http
+  config: ../eapi.conf
 
 default_config: 'flash:default-config'

@@ -1,7 +1,7 @@
 ---
 eapi:
   connection: "{{ inventory_hostname }}"
-  config: eapi.conf
+  config: ../eapi.conf
 
 eos:
   debug: true
