@@ -10,7 +10,7 @@
     transport={{ eapi.transport|default(omit) }}
     connection={{ eapi.connection|default(omit) }}
     config={{ eapi.config|default(omit) }}
-    host={{ host_addr|default(omit) }}
+    host={{ eapi.host|default(omit) }}
     port={{ eapi.port|default(omit) }}
     debug={{ eos.debug|default(omit) }}
   with_items: vlans
@@ -27,7 +27,7 @@
     transport={{ eapi.transport|default(omit) }}
     connection={{ eapi.connection|default(omit) }}
     config={{ eapi.config|default(omit) }}
-    host={{ host_addr|default(omit) }}
+    host={{ eapi.host|default(omit) }}
     port={{ eapi.port|default(omit) }}
     debug={{ eos.debug|default(omit) }}
   when: purge_vlans and vlans is defined
@@ -46,7 +46,7 @@
     transport={{ eapi.transport|default(omit) }}
     connection={{ eapi.connection|default(omit) }}
     config={{ eapi.config|default(omit) }}
-    host={{ host_addr|default(omit) }}
+    host={{ eapi.host|default(omit) }}
     port={{ eapi.port|default(omit) }}
     debug={{ eos.debug|default(omit) }}
   with_items: eos_switchports

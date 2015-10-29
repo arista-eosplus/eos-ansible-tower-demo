@@ -10,7 +10,7 @@
     transport={{ eapi.transport|default(omit) }}
     connection={{ eapi.connection|default(omit) }}
     config={{ eapi.config|default(omit) }}
-    host={{ host_addr|default(omit) }}
+    host={{ eapi.host|default(omit) }}
     port={{ eapi.port|default(omit) }}
     debug={{ eos.debug|default(omit) }}
   when: bgp is defined and bgp.enable
@@ -32,7 +32,7 @@
     transport={{ eapi.transport|default(omit) }}
     connection={{ eapi.connection|default(omit) }}
     config={{ eapi.config|default(omit) }}
-    host={{ host_addr|default(omit) }}
+    host={{ eapi.host|default(omit) }}
     port={{ eapi.port|default(omit) }}
     debug={{ eos.debug|default(omit) }}
   with_items: bgp.neighbors
@@ -50,7 +50,7 @@
     transport={{ eapi.transport|default(omit) }}
     connection={{ eapi.connection|default(omit) }}
     config={{ eapi.config|default(omit) }}
-    host={{ host_addr|default(omit) }}
+    host={{ eapi.host|default(omit) }}
     port={{ eapi.port|default(omit) }}
     debug={{ eos.debug|default(omit) }}
   when: bgp.redistribute is defined and bgp.enable
@@ -66,7 +66,7 @@
     transport={{ eapi.transport|default(omit) }}
     connection={{ eapi.connection|default(omit) }}
     config={{ eapi.config|default(omit) }}
-    host={{ host_addr|default(omit) }}
+    host={{ eapi.host|default(omit) }}
     port={{ eapi.port|default(omit) }}
     debug={{ eos.debug|default(omit) }}
   when: bgp.log_neighbor_changes and bgp.enable
@@ -82,7 +82,7 @@
     transport={{ eapi.transport|default(omit) }}
     connection={{ eapi.connection|default(omit) }}
     config={{ eapi.config|default(omit) }}
-    host={{ host_addr|default(omit) }}
+    host={{ eapi.host|default(omit) }}
     port={{ eapi.port|default(omit) }}
     debug={{ eos.debug|default(omit) }}
   when: bgp.timers is defined and bgp.enable
@@ -97,7 +97,7 @@
     transport={{ eapi.transport|default(omit) }}
     connection={{ eapi.connection|default(omit) }}
     config={{ eapi.config|default(omit) }}
-    host={{ host_addr|default(omit) }}
+    host={{ eapi.host|default(omit) }}
     port={{ eapi.port|default(omit) }}
     debug={{ eos.debug|default(omit) }}
   when: bgp is defined and bgp.enable and bgp.listeners
@@ -113,7 +113,7 @@
     transport={{ eapi.transport|default(omit) }}
     connection={{ eapi.connection|default(omit) }}
     config={{ eapi.config|default(omit) }}
-    host={{ host_addr|default(omit) }}
+    host={{ eapi.host|default(omit) }}
     port={{ eapi.port|default(omit) }}
     debug={{ eos.debug|default(omit) }}
   when: eos_bgp_neighbor_result is defined and
@@ -130,7 +130,7 @@
     transport={{ eapi.transport|default(omit) }}
     connection={{ eapi.connection|default(omit) }}
     config={{ eapi.config|default(omit) }}
-    host={{ host_addr|default(omit) }}
+    host={{ eapi.host|default(omit) }}
     port={{ eapi.port|default(omit) }}
     debug={{ eos.debug|default(omit) }}
   with_items: bgp.networks
@@ -147,7 +147,7 @@
     transport={{ eapi.transport|default(omit) }}
     connection={{ eapi.connection|default(omit) }}
     config={{ eapi.config|default(omit) }}
-    host={{ host_addr|default(omit) }}
+    host={{ eapi.host|default(omit) }}
     port={{ eapi.port|default(omit) }}
     debug={{ eos.debug|default(omit) }}
   when: eos_bgp_network_result is defined and

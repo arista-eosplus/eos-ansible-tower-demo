@@ -1,8 +1,7 @@
 ---
-- name: Configure Arista EOS IP interfaces
-  eos_ipinterface:
-    name={{ item.name }}
-    address={{ item.address }}
+- name: Revert the EOS Running Configuration to a default state
+  eos_command:
+    commands=configure replace {{ default_config }} force
     username={{ eapi.username|default(omit) }}
     password={{ eapi.password|default(omit) }}
     enablepwd={{ eapi.enablepwd|default(omit) }}
@@ -12,5 +11,3 @@
     host={{ eapi.host|default(omit) }}
     port={{ eapi.port|default(omit) }}
     debug={{ eos.debug|default(omit) }}
-  with_items: ip_interfaces
-  when: ip_interfaces is defined

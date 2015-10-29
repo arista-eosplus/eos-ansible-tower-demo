@@ -6,3 +6,5 @@ eapi:
   username: admin
   password: admin
   transport: http
+
+default_config: 'flash:default-config'

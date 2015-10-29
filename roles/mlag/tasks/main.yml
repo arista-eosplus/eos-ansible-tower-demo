@@ -9,7 +9,7 @@
     transport={{ eapi.transport|default(omit) }}
     connection={{ eapi.connection|default(omit) }}
     config={{ eapi.config|default(omit) }}
-    host={{ host_addr|default(omit) }}
+    host={{ eapi.host|default(omit) }}
     port={{ eapi.port|default(omit) }}
     debug={{ eos.debug|default(omit) }}
   when: mlag is defined
@@ -24,7 +24,7 @@
     transport={{ eapi.transport|default(omit) }}
     connection={{ eapi.connection|default(omit) }}
     config={{ eapi.config|default(omit) }}
-    host={{ host_addr|default(omit) }}
+    host={{ eapi.host|default(omit) }}
     port={{ eapi.port|default(omit) }}
     debug={{ eos.debug|default(omit) }}
   when: mlag is defined
@@ -39,7 +39,7 @@
     transport={{ eapi.transport|default(omit) }}
     connection={{ eapi.connection|default(omit) }}
     config={{ eapi.config|default(omit) }}
-    host={{ host_addr|default(omit) }}
+    host={{ eapi.host|default(omit) }}
     port={{ eapi.port|default(omit) }}
     debug={{ eos.debug|default(omit) }}
   when: mlag is defined
@@ -55,7 +55,7 @@
     transport={{ eapi.transport|default(omit) }}
     connection={{ eapi.connection|default(omit) }}
     config={{ eapi.config|default(omit) }}
-    host={{ host_addr|default(omit) }}
+    host={{ eapi.host|default(omit) }}
     port={{ eapi.port|default(omit) }}
     debug={{ eos.debug|default(omit) }}
   with_items: mlag.peer_link_members | default([])
@@ -72,7 +72,7 @@
     transport={{ eapi.transport|default(omit) }}
     connection={{ eapi.connection|default(omit) }}
     config={{ eapi.config|default(omit) }}
-    host={{ host_addr|default(omit) }}
+    host={{ eapi.host|default(omit) }}
     port={{ eapi.port|default(omit) }}
     debug={{ eos.debug|default(omit) }}
   when: mlag
@@ -87,7 +87,7 @@
     transport={{ eapi.transport|default(omit) }}
     connection={{ eapi.connection|default(omit) }}
     config={{ eapi.config|default(omit) }}
-    host={{ host_addr|default(omit) }}
+    host={{ eapi.host|default(omit) }}
     port={{ eapi.port|default(omit) }}
     debug={{ eos.debug|default(omit) }}
   when: mlag
@@ -102,7 +102,7 @@
     transport={{ eapi.transport|default(omit) }}
     connection={{ eapi.connection|default(omit) }}
     config={{ eapi.config|default(omit) }}
-    host={{ host_addr|default(omit) }}
+    host={{ eapi.host|default(omit) }}
     port={{ eapi.port|default(omit) }}
     debug={{ eos.debug|default(omit) }}
   when: mlag
@@ -120,7 +120,7 @@
     transport={{ eapi.transport|default(omit) }}
     connection={{ eapi.connection|default(omit) }}
     config={{ eapi.config|default(omit) }}
-    host={{ host_addr|default(omit) }}
+    host={{ eapi.host|default(omit) }}
     port={{ eapi.port|default(omit) }}
     debug={{ eos.debug|default(omit) }}
   when: mlag
@@ -134,7 +134,7 @@
     transport={{ eapi.transport|default(omit) }}
     connection={{ eapi.connection|default(omit) }}
     config={{ eapi.config|default(omit) }}
-    host={{ host_addr|default(omit) }}
+    host={{ eapi.host|default(omit) }}
     port={{ eapi.port|default(omit) }}
     debug={{ eos.debug|default(omit) }}
   when: mlag.local_if_disable_spanning_tree | default(false)
