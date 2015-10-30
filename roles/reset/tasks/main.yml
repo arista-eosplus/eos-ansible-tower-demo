@@ -1,7 +1,7 @@
 ---
 - name: Revert the EOS Running Configuration to a default state
   eos_command:
-    commands=['configure replace {{ default_config }} force']
+    commands='configure replace {{ default_config }} force'
     username={{ eapi.username|default(omit) }}
     password={{ eapi.password|default(omit) }}
     enablepwd={{ eapi.enablepwd|default(omit) }}
