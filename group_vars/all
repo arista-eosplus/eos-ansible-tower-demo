@@ -3,6 +3,10 @@
 ansible_python_interpreter: python
 
 eapi:
-  config: 'eapi.conf'
+  config: "eapi.conf"
+  connection: "{{ inventory_hostname }}"
 
 default_config: 'flash:default-config'
+
+eos:
+  debug: true
