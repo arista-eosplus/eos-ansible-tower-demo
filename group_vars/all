@@ -3,6 +3,6 @@
 ansible_python_interpreter: python
 
 eapi:
-  config: '../../eapi.conf'
+  config: 'eapi.conf'
 
 default_config: 'flash:default-config'
