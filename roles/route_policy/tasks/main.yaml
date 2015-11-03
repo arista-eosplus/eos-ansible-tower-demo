@@ -1,0 +1,60 @@
+---
+- name: Configure EOS Routemaps
+  eos_routemap:
+    name={{ item.name|default(omit) }}
+    action={{ item.action|default(omit) }}
+    seqno={{ item.seqno|default(omit) }}
+    description="{{ item.description|default(omit) }}"
+    set="{{ item.set|default([])|sort|join(',') or omit }}"
+    match="{{ item.match|default([])|sort|join(',') or omit }}"
+    continue={{ item.continue|default(omit) }}
+    state={{ item.state|default(omit) }}
+    username={{ eos_eapi_username|default(omit) }}
+    password={{ eos_eapi_password|default(omit) }}
+    enablepwd={{ eos_eapi_enablepwd|default(omit) }}
+    transport={{ eos_eapi_transport|default(omit) }}
+    connection={{ eos_eapi_connection|default(omit) }}
+    host={{ eos_eapi_host|default(omit) }}
+    port={{ eos_eapi_port|default(omit) }}
+    debug={{ eos_debug|default(omit) }}
+  when: routemaps is defined
+  with_items: routemaps
+
+- name: Configure EOS ACLs
+  eos_acl_entry:
+    name={{ item.name|default(omit) }}
+    action={{ item.action|default(omit) }}
+    seqno={{ item.seqno|default(omit) }}
+    acltype={{ item.type|default(omit) }}
+    srcaddr={{ item.srcaddr|default(omit) }}
+    srcprefixlen={{ item.srcprefixlen|default(omit) }}
+    log={{ item.log|default(omit) }}
+    username={{ eos_eapi_username|default(omit) }}
+    password={{ eos_eapi_password|default(omit) }}
+    enablepwd={{ eos_eapi_enablepwd|default(omit) }}
+    transport={{ eos_eapi_transport|default(omit) }}
+    connection={{ eos_eapi_connection|default(omit) }}
+    host={{ eos_eapi_host|default(omit) }}
+    port={{ eos_eapi_port|default(omit) }}
+    debug={{ eos_debug|default(omit) }}
+  when: acls is defined
+  with_items: acls
+
+- name: Configure EOS IPv4 Static Routes
+  eos_staticroute:
+    ip_dest={{ item.ip_dest|default(omit) }}
+    next_hop={{ item.next_hop|default(omit) }}
+    next_hop_ip={{ item.next_hop_ip|default(omit) }}
+    distance={{ item.distance|default(omit) }}
+    route_name={{ item.route_name|default(omit) }}
+    tag={{ item.tag|default(omit) }}
+    username={{ eos_eapi_username|default(omit) }}
+    password={{ eos_eapi_password|default(omit) }}
+    enablepwd={{ eos_eapi_enablepwd|default(omit) }}
+    transport={{ eos_eapi_transport|default(omit) }}
+    connection={{ eos_eapi_connection|default(omit) }}
+    host={{ eos_eapi_host|default(omit) }}
+    port={{ eos_eapi_port|default(omit) }}
+    debug={{ eos_debug|default(omit) }}
+  when: ipv4_static_routes is defined
+  with_items: ipv4_static_routes

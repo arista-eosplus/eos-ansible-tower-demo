@@ -1,10 +1,7 @@
 ---
-- name: Configure Vxlan logical interface
-  eos_vxlan:
-    name={{ vxlan.name }}
-    description={{ vxlan.description|default(omit) }}
-    source_interface={{ vxlan.source_interface }}
-    multicast_group={{ vxlan.multicast_group }}
+- name: Configure Arista VARP Mac Address
+  eos_varp:
+    mac_address={{ virtual_mac_addr|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}
@@ -13,12 +10,13 @@
     host={{ eos_eapi_host|default(omit) }}
     port={{ eos_eapi_port|default(omit) }}
     debug={{ eos_debug|default(omit) }}
-  when: vxlan is defined
+  when: virtual_mac_addr is defined
 
-- name: Configure Vxlan global flood list
-  eos_vxlan_vtep:
-    name=Vxlan1
-    vtep={{ item }}
+- name: Configure Arista VARP VLAN resources
+  eos_vlan:
+    vlanid={{ item.vlanid }}
+    name={{ item.name }}
+    enable={{ item.enable|default('true') }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}
@@ -27,14 +25,14 @@
     host={{ eos_eapi_host|default(omit) }}
     port={{ eos_eapi_port|default(omit) }}
     debug={{ eos_debug|default(omit) }}
-  when: vteps is defined
-  with_items: vteps
+  with_items: varp_interfaces
+  when: item.vlanid is defined
 
-- name: Configure Vxlan VLAN to VNI mappings
-  eos_vxlan_vlan:
-    name=Vxlan1
-    vlan={{ item.vlanid }}
-    vni={{ item.vni }}
+- name: Configure Arista VARP VLAN Interface
+  eos_interface:
+    name="Vlan{{ item.vlanid|mandatory }}"
+    description="{{ item.description|default(omit) }}"
+    enable={{ item.enable|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}
@@ -43,14 +41,13 @@
     host={{ eos_eapi_host|default(omit) }}
     port={{ eos_eapi_port|default(omit) }}
     debug={{ eos_debug|default(omit) }}
-  with_items: vlans
-  when: vlans is defined and item.vni is defined
-  register: eos_vxlan_vlan_results
+  with_items: varp_interfaces
+  when: item.vlanid is defined
 
-- name: Purge VLAN to VNI mappings
-  eos_purge:
-    resource=eos_vxlan_vlan
-    results='{{ eos_vxlan_vlan_results|to_nice_json }}'
+- name: Configure Arista VARP VLAN IP interface
+  eos_ipinterface:
+    name="Vlan{{ item.vlanid|mandatory }}"
+    address={{ item.interface_addr }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}
@@ -59,4 +56,20 @@
     host={{ eos_eapi_host|default(omit) }}
     port={{ eos_eapi_port|default(omit) }}
     debug={{ eos_debug|default(omit) }}
-  when: purge_vxlan and eos_vxlan_vlan_results
+  with_items: varp_interfaces
+  when: item.interface_addr is defined
+
+- name: Configure EOS VARP Interface Shared IP(s)
+  eos_varp_interface:
+    name="Vlan{{ item.vlanid|mandatory }}"
+    shared_ip="{{ item.virtual_addrs|default([])|join(',') or omit }}"
+    username={{ eos_eapi_username|default(omit) }}
+    password={{ eos_eapi_password|default(omit) }}
+    enablepwd={{ eos_eapi_enablepwd|default(omit) }}
+    transport={{ eos_eapi_transport|default(omit) }}
+    connection={{ eos_eapi_connection|default(omit) }}
+    host={{ eos_eapi_host|default(omit) }}
+    port={{ eos_eapi_port|default(omit) }}
+    debug={{ eos_debug|default(omit) }}
+  when: varp_interfaces is defined
+  with_items: varp_interfaces

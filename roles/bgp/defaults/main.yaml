@@ -2,5 +2,5 @@
 bgp:
   enable: no
 
-purge_bgp_networks: no
-purge_bgp_neighbors: no
+eos_purge_bgp_networks: no
+eos_purge_bgp_neighbors: no

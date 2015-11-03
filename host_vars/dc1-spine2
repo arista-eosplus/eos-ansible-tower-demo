@@ -1,0 +1,77 @@
+---
+eos_eapi_host: 172.16.130.202
+
+hostname: spine-02
+
+vlans:
+  - vlanid: 1
+    name: default
+  - vlanid: 2
+    name: production
+
+interfaces:
+  - name: Loopback0
+    enable: true
+  - name: Loopback1
+    enable: true
+  - name: Ethernet1
+    description: "[BGP]Connection to Leaf1"
+    enable: true
+  - name: Ethernet2
+    description: "[BGP]Connection to Leaf2"
+    enable: true
+
+ip_interfaces:
+  - name: Loopback0
+    address: 1.1.1.2/32
+  - name: Loopback1
+    address: 2.2.2.2/32
+  - name: Ethernet1
+    address: 10.1.2.0/31
+  - name: Ethernet2
+    address: 10.1.2.2/31
+
+routemaps:
+  - name: RM-1
+    action: permit
+    seqno: 10
+    description: My wonderful routemap
+    match:
+      - as 1000
+      - source-protocol bgp
+    continue: 20
+
+acls:
+  - name: ACL-1
+    action: permit
+    seqno: 50
+    description: My wonderful acl
+    type: standard
+    srcaddr: 10.10.10.10
+    srcprefixlen: 32
+
+ipv4_static_routes:
+  - ip_dest: 0.0.0.0/0
+    next_hop: Management1
+    next_hop_ip: 172.16.130.2
+    route_name: Default
+    tag: 100
+
+bgp:
+  enable: true
+  bgp_as: 65001
+  redistribute:
+    - connected
+  log_neighbor_changes: yes
+  timers:
+    keep_alive: 1
+    hold: 3
+  neighbors:
+    - name: 10.1.2.1
+      remote_as: 65002
+      peer_group: demoleaf
+      enable: true
+    - name: 10.1.2.3
+      remote_as: 65002
+      peer_group: demoleaf
+      enable: true

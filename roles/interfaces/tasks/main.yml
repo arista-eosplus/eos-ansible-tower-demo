@@ -4,14 +4,13 @@
     name={{ item.name }}
     description="{{ item.description|default(omit) }}"
     enable={{ item.enable|default(omit) }}
-    username={{ eapi.username|default(omit) }}
-    password={{ eapi.password|default(omit) }}
-    enablepwd={{ eapi.enablepwd|default(omit) }}
-    transport={{ eapi.transport|default(omit) }}
-    connection={{ eapi.connection|default(omit) }}
-    config={{ eapi.config|default(omit) }}
-    host={{ eapi.host|default(omit) }}
-    port={{ eapi.port|default(omit) }}
-    debug={{ eos.debug|default(omit) }}
+    username={{ eos_eapi_username|default(omit) }}
+    password={{ eos_eapi_password|default(omit) }}
+    enablepwd={{ eos_eapi_enablepwd|default(omit) }}
+    transport={{ eos_eapi_transport|default(omit) }}
+    connection={{ eos_eapi_connection|default(omit) }}
+    host={{ eos_eapi_host|default(omit) }}
+    port={{ eos_eapi_port|default(omit) }}
+    debug={{ eos_debug|default(omit) }}
   with_items: interfaces
   when: interfaces is defined

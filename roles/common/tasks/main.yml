@@ -1,15 +1,46 @@
 ---
-- name: Configure Arista EOS hostname and IP Routing
+- name: Configure Arista EOS Hostname
   eos_system:
     hostname={{ hostname|default(omit) }}
-    ip_routing={{ ip_routing_enabled|default(omit) }}
-    username={{ eapi.username|default(omit) }}
-    password={{ eapi.password|default(omit) }}
-    enablepwd={{ eapi.enablepwd|default(omit) }}
-    transport={{ eapi.transport|default(omit) }}
-    connection={{ eapi.connection|default(omit) }}
-    config={{ eapi.config|default(omit) }}
-    host={{ eapi.host|default(omit) }}
-    port={{ eapi.port|default(omit) }}
-    debug={{ eos.debug|default(omit) }}
-  when: hostname is defined or ip_routing_enabled is defined
+    username={{ eos_eapi_username|default(omit) }}
+    password={{ eos_eapi_password|default(omit) }}
+    enablepwd={{ eos_eapi_enablepwd|default(omit) }}
+    transport={{ eos_eapi_transport|default(omit) }}
+    connection={{ eos_eapi_connection|default(omit) }}
+    host={{ eos_eapi_host|default(omit) }}
+    port={{ eos_eapi_port|default(omit) }}
+    debug={{ eos_debug|default(omit) }}
+  when: hostname is defined
+
+- name: Configure Arista EOS IP Routing
+  eos_system:
+    ip_routing={{ eos_ip_routing_enabled }}
+    username={{ eos_eapi_username|default(omit) }}
+    password={{ eos_eapi_password|default(omit) }}
+    enablepwd={{ eos_eapi_enablepwd|default(omit) }}
+    transport={{ eos_eapi_transport|default(omit) }}
+    connection={{ eos_eapi_connection|default(omit) }}
+    host={{ eos_eapi_host|default(omit) }}
+    port={{ eos_eapi_port|default(omit) }}
+    debug={{ eos_debug|default(omit) }}
+  when: eos_ip_routing_enabled is defined
+
+- name: Configure Arista EOS CLI Users
+  eos_user:
+    name={{ item.name|default(omit) }}
+    encryption={{ item.encryption|default(omit) }}
+    secret={{ item.secret|default(omit) }}
+    nopassword={{ item.nopassword|default(omit) }}
+    privilege={{ item.privilege|default(omit) }}
+    role={{ item.role|default(omit) }}
+    sshkey={{ item.sshkey|default(omit) }}
+    username={{ eos_eapi_username|default(omit) }}
+    password={{ eos_eapi_password|default(omit) }}
+    enablepwd={{ eos_eapi_enablepwd|default(omit) }}
+    transport={{ eos_eapi_transport|default(omit) }}
+    connection={{ eos_eapi_connection|default(omit) }}
+    host={{ eos_eapi_host|default(omit) }}
+    port={{ eos_eapi_port|default(omit) }}
+    debug={{ eos_debug|default(omit) }}
+  when: eos_users is defined
+  with_items: eos_users
