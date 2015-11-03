@@ -3,14 +3,14 @@
 ansible_python_interpreter: python
 
 # If you want to use an eapi.conf, set this object
-# eos_eapi_connection: "{{ inventory_hostname }}"
-# eos_eapi_config: eapi.conf
+eos_eapi_connection: "{{ inventory_hostname }}"
+eos_eapi_config: eapi.conf
 
 # Otherwise you can use these variables along with eos_eapi_host to avoid
 # requiring the use of eapi.conf
-eos_eapi_transport: http
-eos_eapi_username: admin
-eos_eapi_password: admin
+#eos_eapi_transport: http
+#eos_eapi_username: admin
+#eos_eapi_password: admin
 
 eos_debug: true
 
