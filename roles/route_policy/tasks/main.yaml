@@ -9,6 +9,7 @@
     match="{{ item.match|default([])|sort|join(',') or omit }}"
     continue={{ item.continue|default(omit) }}
     state={{ item.state|default(omit) }}
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}
@@ -29,6 +30,7 @@
     srcaddr={{ item.srcaddr|default(omit) }}
     srcprefixlen={{ item.srcprefixlen|default(omit) }}
     log={{ item.log|default(omit) }}
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}
@@ -48,6 +50,7 @@
     distance={{ item.distance|default(omit) }}
     route_name={{ item.route_name|default(omit) }}
     tag={{ item.tag|default(omit) }}
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}

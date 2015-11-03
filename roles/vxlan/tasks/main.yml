@@ -5,6 +5,7 @@
     description={{ vxlan.description|default(omit) }}
     source_interface={{ vxlan.source_interface }}
     multicast_group={{ vxlan.multicast_group }}
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}
@@ -19,6 +20,7 @@
   eos_vxlan_vtep:
     name=Vxlan1
     vtep={{ item }}
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}
@@ -35,6 +37,7 @@
     name=Vxlan1
     vlan={{ item.vlanid }}
     vni={{ item.vni }}
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}
@@ -51,6 +54,7 @@
   eos_purge:
     resource=eos_vxlan_vlan
     results='{{ eos_vxlan_vlan_results|to_nice_json }}'
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}

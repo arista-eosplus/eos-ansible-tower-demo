@@ -4,6 +4,7 @@
     name={{ item.name }}
     description="{{ item.description|default(omit) }}"
     enable={{ item.enable|default(omit) }}
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}

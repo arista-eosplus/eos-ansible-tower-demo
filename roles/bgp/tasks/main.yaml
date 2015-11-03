@@ -6,6 +6,7 @@
     router_id={{ bgp.router_id|default(omit) }}
     maximum_paths={{ bgp.maximum_paths|default(omit) }}
     maximum_ecmp_paths={{ bgp.maximum_ecmp_paths|default(omit) }}
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}
@@ -27,6 +28,7 @@
     route_map_in={{ item.route_map_in|default(omit) }}
     route_map_out={{ item.route_map_out|default(omit) }}
     send_community={{ item.send_community|default(omit) }}
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}
@@ -44,6 +46,7 @@
     section='router bgp {{ bgp.bgp_as }}'
     regexp='(?<!no )redistribute {{ item }}'
     command='redistribute {{ item }}'
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}
@@ -61,6 +64,7 @@
     regexp='(?<!no )bgp log-neighbor-changes'
     command='bgp log-neighbor-changes'
     username={{ eos_eapi_username|default(omit) }}
+    config={{ eos_eapi_config|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}
     transport={{ eos_eapi_transport|default(omit) }}
@@ -75,6 +79,7 @@
   eos_config:
     section='router bgp {{ bgp.bgp_as }}'
     command='timers bgp {{ bgp.timers.keep_alive }} {{ bgp.timers.hold }}'
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}
@@ -89,6 +94,7 @@
   eos_config:
     section='router bgp {{ bgp.bgp_as }}'
     command='bgp listen range {{ item.name }} peer-group {{ item.peer_group }} remote-as {{ item.remote_as }}'
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}
@@ -104,6 +110,7 @@
   eos_purge:
     resource=eos_bgp_neighbor
     results='{{ eos_bgp_neighbor_result|to_nice_json }}'
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}
@@ -120,6 +127,7 @@
     prefix={{ item.prefix }}
     masklen={{ item.masklen }}
     route_map={{ item.route_map|default(omit) }}
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}
@@ -136,6 +144,7 @@
   eos_purge:
     resource=eos_bgp_network
     results='{{ eos_bgp_network_result|to_nice_json }}'
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}

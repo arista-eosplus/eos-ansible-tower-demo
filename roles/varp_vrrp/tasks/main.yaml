@@ -2,6 +2,7 @@
 - name: Configure Arista VARP Mac Address
   eos_varp:
     mac_address={{ virtual_mac_addr|default(omit) }}
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}
@@ -17,6 +18,7 @@
     vlanid={{ item.vlanid }}
     name={{ item.name }}
     enable={{ item.enable|default('true') }}
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}
@@ -33,6 +35,7 @@
     name="Vlan{{ item.vlanid|mandatory }}"
     description="{{ item.description|default(omit) }}"
     enable={{ item.enable|default(omit) }}
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}
@@ -48,6 +51,7 @@
   eos_ipinterface:
     name="Vlan{{ item.vlanid|mandatory }}"
     address={{ item.interface_addr }}
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}
@@ -63,6 +67,7 @@
   eos_varp_interface:
     name="Vlan{{ item.vlanid|mandatory }}"
     shared_ip="{{ item.virtual_addrs|default([])|join(',') or omit }}"
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}

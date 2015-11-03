@@ -2,6 +2,7 @@
 - name: Configure Arista EOS Hostname
   eos_system:
     hostname={{ hostname|default(omit) }}
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}
@@ -15,6 +16,7 @@
 - name: Configure Arista EOS IP Routing
   eos_system:
     ip_routing={{ eos_ip_routing_enabled }}
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}
@@ -34,6 +36,7 @@
     privilege={{ item.privilege|default(omit) }}
     role={{ item.role|default(omit) }}
     sshkey={{ item.sshkey|default(omit) }}
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}

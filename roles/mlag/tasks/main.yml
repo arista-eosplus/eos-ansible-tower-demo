@@ -3,6 +3,7 @@
   eos_vlan:
     vlanid={{ mlag.local_if_vlan | regex_replace('\D+','') }}
     trunk_groups={{ mlag.mlag_trunk_group }}
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}
@@ -17,6 +18,7 @@
   eos_interface:
     name={{ mlag.local_if_vlan }}
     description="{{ mlag.mlag_domain_id }} SVI"
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}
@@ -31,6 +33,7 @@
   eos_ipinterface:
     name={{ mlag.local_if_vlan }}
     address={{ mlag.local_if_ip_address }}
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}
@@ -46,6 +49,7 @@
     name={{ item }}
     description="MLAG PEER CNX - {{ mlag.mlag_domain_id }}"
     enable={{ mlag.peer_link_enable }}
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}
@@ -62,6 +66,7 @@
     name={{ mlag.peer_link_if }}
     members={{ mlag.peer_link_members | join(',') }}
     lacp_mode={{ mlag.peer_link_lacp_mode }}
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}
@@ -76,6 +81,7 @@
   eos_config:
     section='interface {{ mlag.peer_link_if }}'
     command='switchport mode trunk'
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}
@@ -90,6 +96,7 @@
   eos_config:
     section='interface {{ mlag.peer_link_if }}'
     command='switchport trunk group {{ mlag.mlag_trunk_group }}'
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}
@@ -107,6 +114,7 @@
     peer_address={{ mlag.peer_address }}
     peer_link={{ mlag.peer_link_if }}
     shutdown={{ mlag.mlag_shutdown }}
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}
@@ -120,6 +128,7 @@
 - name: Disable Spanning Tree on MLAG Vlan
   eos_config:
     command='no spanning-tree vlan {{ mlag.local_if_vlan | regex_replace('\D+','') }}'
+    config={{ eos_eapi_config|default(omit) }}
     username={{ eos_eapi_username|default(omit) }}
     password={{ eos_eapi_password|default(omit) }}
     enablepwd={{ eos_eapi_enablepwd|default(omit) }}
