@@ -2,6 +2,9 @@
 # make ansible play nice in a virtualenv
 ansible_python_interpreter: python
 
+# Used for the reset role. Where to find the default config
+default_config: 'flash:default-config'
+
 # If you want to use an eapi.conf, set this object
 eos_eapi_connection: "{{ inventory_hostname }}"
 eos_eapi_config: eapi.conf
