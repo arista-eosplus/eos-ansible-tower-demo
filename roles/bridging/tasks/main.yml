@@ -49,5 +49,5 @@
     host={{ eos_eapi_host|default(omit) }}
     port={{ eos_eapi_port|default(omit) }}
     debug={{ eos_debug|default(omit) }}
-  with_items: eos_switchports
-  when: eos_switchports is defined
+  with_items: switchports
+  when: switchports is defined
