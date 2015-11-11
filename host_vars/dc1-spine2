@@ -1,7 +1,5 @@
 ---
-eos_eapi_host: 172.16.130.202
-
-hostname: spine-02
+hostname: dc1-spine2
 
 vlans:
   - vlanid: 1

@@ -4,4 +4,4 @@
   connection: local
 
   roles:
-    - bridging
+    - arista.eos-bridging

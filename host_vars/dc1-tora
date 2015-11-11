@@ -1,7 +1,5 @@
 ---
-eos_eapi_host: 172.16.130.203
-
-hostname: leaf-01
+hostname: dc1-tora
 
 vlans:
   - vlanid: 1

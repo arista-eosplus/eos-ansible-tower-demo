@@ -1,7 +1,5 @@
 ---
-eos_eapi_host: 172.16.130.204
-
-hostname: leaf-02
+hostname: dc1-torb
 
 vlans:
   - vlanid: 1

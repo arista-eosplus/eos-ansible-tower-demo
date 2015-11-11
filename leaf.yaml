@@ -4,11 +4,11 @@
   connection: local
 
   roles:
-    - common
-    - interfaces
-    - bridging
-    - ipv4
-    - route_policy
-    - bgp
-    - mlag
-    - varp_vrrp
+    - arista.eos-system
+    - arista.eos-interfaces
+    - arista.eos-bridging
+    - arista.eos-ipv4
+    - arista.eos-route-control
+    - arista.eos-bgp
+    - arista.eos-mlag
+    - arista.eos-virtual-router
