@@ -30,5 +30,3 @@ eos_users:
     nopassword: true
     privilege: 0
     role: network-operator
-
-no_log: false
