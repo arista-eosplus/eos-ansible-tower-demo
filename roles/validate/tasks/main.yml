@@ -1,0 +1,65 @@
+---
+- pause: seconds={{ pause_sec }}
+
+- name: Gather EOS Hostname
+  eos_command:
+    commands:
+      - 'show hostname'
+    provider: '{{ provider }}'
+  register: showhostname
+
+- name: Check EOS Hostname
+  assert:
+    that:
+      - "'{{ hostname }}' == showhostname['stdout'][0]['hostname']"
+
+- name: Gather Show Version Facts
+  eos_command:
+    commands:
+      - 'show version'
+    provider: '{{ provider }}'
+  register: showvers
+
+- name: Check EOS System Parameters
+  assert:
+    that:
+      - "'4.14.5F' == showvers['stdout'][0]['version']"
+      - "'vEOS' == showvers['stdout'][0]['modelName']"
+
+- name: Gather MLAG Facts
+  eos_command:
+    commands:
+      - 'show mlag'
+    provider: '{{ provider }}'
+  register: showmlag
+  when: mlag is defined
+
+- name: Check MLAG Configuration
+  assert:
+    that:
+      - "'{{ mlag.local_if_vlan}}' == showmlag['stdout'][0]['localInterface']"
+      - "'{{ mlag.peer_link_if }}' == showmlag['stdout'][0]['peerLink']"
+      - "'active' == showmlag['stdout'][0]['state']"
+      - "'connected' == showmlag['stdout'][0]['negStatus']"
+      - "'up' == showmlag['stdout'][0]['peerLinkStatus']"
+  when: mlag is defined
+
+- name: Gather VARP Facts
+  eos_command:
+    commands:
+      - 'show ip virtual-router'
+    provider: '{{ provider }}'
+  register: showvarp
+  when: varp_interfaces is defined or virtual_mac_addr is defined
+
+- name: Check VARP Mac Address
+  assert:
+    that:
+      - "'{{ virtual_mac_addr }}' == showvarp['stdout'][0]['virtualMac']"
+  when: virtual_mac_addr is defined
+
+- name: Check Number of VARP Interfaces
+  assert:
+    that:
+      - "{{ varp_interfaces|length }} == {{ showvarp['stdout'][0]['virtualRouters'] | length }}"
+  when: varp_interfaces is defined

@@ -31,15 +31,6 @@ ip_interfaces:
   - name: Ethernet2
     address: 10.1.2.2/31
 
-routemaps:
-  - name: RM-1
-    action: permit
-    seqno: 10
-    description: My wonderful routemap
-    match:
-      - as 1000
-      - source-protocol bgp
-    continue: 20
 
 acls:
   - name: ACL-1
