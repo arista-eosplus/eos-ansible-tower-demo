@@ -18,7 +18,7 @@ pause_sec: 5
 
 # Upgrade related vars
 target_version: 4.15.0F
-swi_url: "tftp://172.16.130.11/EOS-{{ target_version }}.swi"
+swi_url: "flash:EOS-{{ target_version }}.swi"
 swi_dest: "flash:"
 install_pause: 90
 
