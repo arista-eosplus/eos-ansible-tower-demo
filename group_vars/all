@@ -7,7 +7,7 @@ default_config: 'flash:default-config'
 
 # Connection to the devices
 provider:
-  host: '{{ inventory_hostname }}'
+  host: '{{ eos_host_ip }}'
   username: admin
   password: admin
   authorize: true

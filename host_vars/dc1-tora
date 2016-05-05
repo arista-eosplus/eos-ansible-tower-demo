@@ -1,6 +1,8 @@
 ---
 hostname: dc1-tora
 
+eos_host_ip: 172.16.130.203
+
 vlans:
   - vlanid: 1
     name: default

@@ -1,6 +1,8 @@
 ---
 hostname: dc1-spine2
 
+eos_host_ip: 172.16.130.202
+
 vlans:
   - vlanid: 1
     name: default
