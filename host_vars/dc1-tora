@@ -7,7 +7,7 @@ vlans:
   - vlanid: 1
     name: default
   - vlanid: 2
-    name: production
+    name: cloudbuilderdemo
 
 interfaces:
   - name: Loopback0
