@@ -13,6 +13,10 @@
     commands:
       - 'install source {{ swi_url }} reload now'
     provider: '{{ provider }}'
+    waitfor:
+      - ''
+    retries: 50
+    interval: 2
   when: perform_upgrade
 
 - name: Wait for switch to come back online
