@@ -14,7 +14,7 @@
       - 'install source {{ swi_url }} reload now'
     provider: '{{ provider }}'
     waitfor:
-      - ''
+      - "result[0] contains ''"
     retries: 50
     interval: 2
   when: perform_upgrade
