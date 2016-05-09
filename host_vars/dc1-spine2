@@ -8,8 +8,6 @@ vlans:
     name: default
   - vlanid: 2
     name: production
-  - vlanid: 30
-    name: test
 
 interfaces:
   - name: Loopback0
