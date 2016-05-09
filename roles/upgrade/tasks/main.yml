@@ -20,7 +20,7 @@
     host={{ inventory_hostname }}
     delay={{ install_pause }}
     port=22
-    timeout=360
+    timeout={{ reboot_timer | default(300) }}
   when: perform_upgrade
 
 - name: Gather Show Version Facts
