@@ -3,7 +3,7 @@
   gather_facts: no
   connection: local
   environment:
-    sPYTHONPATH: '/usr/local/lib/python2.7/dist-packages/'
+    PYTHONPATH: '/usr/local/lib/python2.7/dist-packages/'
 
   roles:
     - arista.eos-system
