@@ -11,7 +11,8 @@ provider:
   username: admin
   password: admin
   authorize: true
-  transport: cli
+  use_ssl: no
+  transport: eapi
 
 pause_sec: 5
 
