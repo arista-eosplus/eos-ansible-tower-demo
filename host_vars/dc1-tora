@@ -86,7 +86,7 @@ mlag:
     peer_address: 10.0.0.2
     peer_link_if: Port-Channel10
     peer_link_mode: trunk
-    peer_link_lacp_mode: on
+    peer_link_lacp_mode: "on"
     peer_link_enable: true
     peer_link_members:
       - Ethernet3
