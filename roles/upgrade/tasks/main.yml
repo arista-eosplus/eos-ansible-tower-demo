@@ -19,7 +19,7 @@
   wait_for:
     host={{ inventory_hostname }}
     delay={{ install_pause }}
-    port=22
+    port=80
     timeout={{ reboot_timer | default(300) }}
   when: perform_upgrade
 
