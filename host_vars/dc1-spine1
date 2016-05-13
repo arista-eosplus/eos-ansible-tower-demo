@@ -8,6 +8,8 @@ vlans:
     name: default
   - vlanid: 2
     name: production
+  - vlanid: 200
+    name: senewhire
 
 interfaces:
   - name: Loopback0
