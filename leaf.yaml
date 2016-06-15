@@ -13,4 +13,4 @@
     - arista.eos-route-control
     - arista.eos-bgp
     - arista.eos-mlag
-#    - arista.eos-virtual-router
+    - arista.eos-virtual-router
