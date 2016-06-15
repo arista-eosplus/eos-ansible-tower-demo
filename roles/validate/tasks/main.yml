@@ -23,7 +23,7 @@
 - name: Check EOS System Parameters
   assert:
     that:
-      - "'4.14.5F' == showvers['stdout'][0]['version']"
+      - "'{{ target_version }}' == showvers['stdout'][0]['version']"
       - "'vEOS' == showvers['stdout'][0]['modelName']"
 
 - name: Gather MLAG Facts
