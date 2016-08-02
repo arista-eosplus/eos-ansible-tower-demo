@@ -1,7 +1,7 @@
 ---
 hostname: dc1-spine1
 
-eos_host_ip: 172.16.130.201
+eos_host_ip: 172.28.169.118
 
 vlans:
   - vlanid: 1

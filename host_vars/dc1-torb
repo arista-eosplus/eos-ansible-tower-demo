@@ -1,7 +1,7 @@
 ---
 hostname: dc1-torb
 
-eos_host_ip: 172.16.130.204
+eos_host_ip: 172.28.169.121
 
 vlans:
   - vlanid: 1
