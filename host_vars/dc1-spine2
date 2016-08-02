@@ -44,7 +44,7 @@ acls:
 ipv4_static_routes:
   - ip_dest: 0.0.0.0/0
     next_hop: Management1
-    next_hop_ip: 172.16.130.2
+    next_hop_ip: 172.28.168.1
     route_name: Default
     tag: 100
 
