@@ -8,6 +8,8 @@ vlans:
     name: default
   - vlanid: 2
     name: app2
+  - vlanid: 3
+    name: app3
 
 interfaces:
   - name: Loopback0
