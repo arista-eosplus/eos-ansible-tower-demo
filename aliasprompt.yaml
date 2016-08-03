@@ -4,10 +4,10 @@
   connection: local
 
   tasks:
-
+  
     - name: change user prompt
       eos_template:
-        provider: "{{provide}}"
+        provider: "{{ provider }}"
         src: prompt.j2
       with_items:
         - "{{prompt_name|default([])}}"
