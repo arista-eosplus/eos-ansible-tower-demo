@@ -7,7 +7,7 @@
 
     - name: change user prompt
       eos_template:
-        provider: "{{provider}}"
+        provider: "{{provide}}"
         src: prompt.j2
       with_items:
         - "{{prompt_name|default([])}}"
