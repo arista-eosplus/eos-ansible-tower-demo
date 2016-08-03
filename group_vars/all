@@ -30,3 +30,10 @@ eos_users:
     nopassword: true
     privilege: 0
     role: network-operator
+  
+cli_aliases:
+  - cc clear counters
+  - senz show interface counter error | nz
+  - snz show interface counter | nz
+  - sqnz show interface counter queue | nz
+  - srnz show interface counter rate | nz
