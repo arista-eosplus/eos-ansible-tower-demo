@@ -1,0 +1,6 @@
+{% raw %}
+prompt %H.%D{%H:%M:%S}%P
+{% endraw %}
+{% for cmd in cli_aliases %}
+alias {{ cmd }}
+{% endfor %}
