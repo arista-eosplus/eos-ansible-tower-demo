@@ -1,5 +1,5 @@
 ---
-- hosts: "{{ upgrade_hosts | default('all') }}"
+- hosts: all
   gather_facts: no
   connection: local
 
