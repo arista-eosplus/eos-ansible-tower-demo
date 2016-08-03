@@ -14,6 +14,14 @@ provider:
   use_ssl: no
   transport: eapi
 
+provide:
+  host: '{{ eos_host_ip }}'
+  username: admin
+  password: admin
+  authorize: yes
+  use_ssl: no
+  transport: cli
+
 pause_sec: 5
 
 # Upgrade related vars
