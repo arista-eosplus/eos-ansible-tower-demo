@@ -25,7 +25,7 @@ provide:
 pause_sec: 5
 
 # Upgrade related vars
-target_version: 4.15.0F
+target_version: 4.15.6M
 swi_url: "flash:EOS-{{ target_version }}.swi"
 swi_dest: "flash:"
 install_pause: 90
@@ -39,7 +39,7 @@ eos_users:
     nopassword: true
     privilege: 0
     role: network-operator
-  
+
 cli_aliases:
   - cc clear counters
   - senz show interface counter error | nz
