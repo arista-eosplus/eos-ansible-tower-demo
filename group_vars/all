@@ -22,6 +22,7 @@ swi_url: "flash:EOS-{{ target_version }}.swi"
 swi_dest: "flash:"
 install_pause: 90
 
+upstream_check: 8.8.8.8
 
 eos_debug: true
 

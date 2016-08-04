@@ -1,6 +1,4 @@
 ---
-- pause: seconds={{ pause_sec }}
-
 - name: Gather EOS Hostname
   eos_command:
     commands:
@@ -39,8 +37,6 @@
     that:
       - "'{{ mlag.local_if_vlan}}' == showmlag['stdout'][0]['localInterface']"
       - "'{{ mlag.peer_link_if }}' == showmlag['stdout'][0]['peerLink']"
-      - "'active' == showmlag['stdout'][0]['state']"
-      - "'connected' == showmlag['stdout'][0]['negStatus']"
       - "'up' == showmlag['stdout'][0]['peerLinkStatus']"
   when: mlag is defined
 
@@ -63,3 +59,11 @@
     that:
       - "{{ varp_interfaces|length }} == {{ showvarp['stdout'][0]['virtualRouters'] | length }}"
   when: varp_interfaces is defined
+
+- name: Ping Upstream Endpoint
+  eos_command:
+    commands:
+      - 'ping {{ upstream_check }}'
+    waitfor: "result[0] not contains '100% packet loss'"
+    retries: 1
+    provider: '{{ provider }}'
