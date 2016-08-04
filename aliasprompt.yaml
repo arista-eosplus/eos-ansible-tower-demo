@@ -1,0 +1,13 @@
+---
+- hosts: all
+  gather_facts: no
+  connection: local
+
+  tasks:
+  
+    - name: change user prompt
+      eos_template:
+        provider: "{{ provider }}"
+        src: prompt.j2
+      with_items:
+        - "{{cli_aliases|default([])}}"

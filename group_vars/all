@@ -14,6 +14,14 @@ provider:
   use_ssl: no
   transport: eapi
 
+provide:
+  host: '{{ eos_host_ip }}'
+  username: admin
+  password: admin
+  authorize: yes
+  use_ssl: no
+  transport: cli
+
 pause_sec: 5
 
 # Upgrade related vars
@@ -31,3 +39,10 @@ eos_users:
     nopassword: true
     privilege: 0
     role: network-operator
+  
+cli_aliases:
+  - cc clear counters
+  - senz show interface counter error | nz
+  - snz show interface counter | nz
+  - sqnz show interface counter queue | nz
+  - srnz show interface counter rate | nz
