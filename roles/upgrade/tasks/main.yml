@@ -17,7 +17,7 @@
 
 - name: Wait for switch to come back online
   wait_for:
-    host={{ inventory_hostname }}
+    host={{ provider.host }}
     delay={{ install_pause }}
     port=22
     timeout={{ reboot_timer | default(300) }}
