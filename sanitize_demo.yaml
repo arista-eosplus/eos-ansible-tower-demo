@@ -1,0 +1,11 @@
+---
+- hosts: spine:leaf
+  gather_facts: no
+  connection: local
+
+  environment:
+    PYTHONPATH: '/usr/local/lib/python2.7/dist-packages/'
+
+  roles:
+    - { role: upgrade, target_version: "4.15.6M" }
+    - reset
