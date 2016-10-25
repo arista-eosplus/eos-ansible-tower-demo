@@ -2,12 +2,9 @@
 # make ansible play nice in a virtualenv
 # ansible_python_interpreter: python
 
-# Used for the reset role. Where to find the default config
-default_config: 'flash:default-config'
-
 # Connection to the devices
 provider:
-  host: '{{ eos_host_ip }}'
+  host: '{{ inventory_hostname }}'
   username: admin
   password: admin
   authorize: true
@@ -16,9 +13,13 @@ provider:
 
 pause_sec: 5
 
+# TFTP Server
+tftp_srv: 'tftp://172.16.130.200/'
+config_dir: 'configs/'
+
 # Upgrade related vars
 target_version: 4.15.0F
-swi_url: "flash:EOS-{{ target_version }}.swi"
+swi_url: "{{ tftp_srv }}/swi/EOS-{{ target_version }}.swi"
 swi_dest: "flash:"
 install_pause: 90
 

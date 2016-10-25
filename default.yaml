@@ -6,4 +6,5 @@
     PYTHONPATH: '/usr/local/lib/python2.7/dist-packages/'
 
   roles:
-    - reset
+    - { role: reset }
+    - { role: upgrade, target_version: 4.15.6M }
