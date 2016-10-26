@@ -9,7 +9,7 @@ provider:
   password: admin
   authorize: true
   use_ssl: no
-  transport: cli
+  transport: eapi
 
 pause_sec: 5
 

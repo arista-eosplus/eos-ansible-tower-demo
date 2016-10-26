@@ -2,7 +2,7 @@
 - name: Gather Show Version Facts
   eos_command:
     commands:
-      - 'show version | json'
+      - 'show version'
     provider: '{{ provider }}'
   register: showvers
 
@@ -21,6 +21,7 @@
       - 'reload now'
     provider: '{{ provider }}'
   when: perform_upgrade
+  ignore_errors: yes
 
 - name: Wait for switch to come back online
   wait_for:
@@ -36,7 +37,7 @@
 - name: Gather Show Version Facts
   eos_command:
     commands:
-      - 'show version | json'
+      - 'show version'
     provider: '{{ provider }}'
   register: showvers_post
   when: perform_upgrade
