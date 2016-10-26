@@ -2,6 +2,7 @@
 - name: Revert the EOS Running Configuration to a default state
   eos_command:
     commands:
-      - 'configure replace {{ tftp_srv }}/{{ config_dir }}/{{ inventory_hostname }}.default'
-      - 'write memory'
+      - 'show version'
+#      - 'configure replace {{ base_config }}'
+#      - 'write memory'
     provider: '{{ provider }}'
