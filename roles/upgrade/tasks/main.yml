@@ -33,4 +33,4 @@
 - name: Check EOS Version
   assert:
     that:
-      - "'{{ target_version }}' == showvers_post['stdout'][0]['version']"
+      - "'{{ target_version }}' in showvers_post['stdout'][0]['version']"
