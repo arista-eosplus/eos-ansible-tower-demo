@@ -6,7 +6,7 @@
     provider: '{{ provider }}'
   register: showvers
 
-- set_fact: perform_upgrade={{ target_version != showvers['stdout'][0]['version'] }}
+- set_fact: perform_upgrade={{ target_version not in showvers['stdout'][0]['version'] }}
 
 - name: Install new SWI
   eos_command:
@@ -29,6 +29,8 @@
     port=80
     timeout={{ reboot_timer | default(300) }}
   when: perform_upgrade
+
+- pause: seconds=5
 
 - name: Gather Show Version Facts
   eos_command:
