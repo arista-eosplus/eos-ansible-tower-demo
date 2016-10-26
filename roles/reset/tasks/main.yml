@@ -2,7 +2,6 @@
 - name: Revert the EOS Running Configuration to a default state
   eos_command:
     commands:
-      - 'show version'
-#      - 'configure replace {{ base_config }}'
-#      - 'write memory'
+      - 'configure replace {{ base_config }}'
+      - 'write memory'
     provider: '{{ provider }}'
