@@ -19,7 +19,7 @@ config_dir: 'configs/'
 base_config: '{{ tftp_srv }}/{{ config_dir}}/{{ inventory_hostname }}.default'
 
 # Upgrade related vars
-target_version: 4.15.5F
+target_version: 4.16.7M
 swi_url: "{{ tftp_srv }}/swi/EOS-{{ target_version }}.swi"
 swi_dest: "flash:"
 install_pause: 90
