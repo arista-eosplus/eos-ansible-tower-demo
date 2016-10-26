@@ -11,7 +11,14 @@
 - name: Install new SWI
   eos_command:
     commands:
-      - 'install source {{ swi_url }} reload now'
+      - 'install source {{ swi_url }} now'
+    provider: '{{ provider }}'
+  when: perform_upgrade
+
+- name: Reload the Switch
+  eos_command:
+    commands:
+      - 'reload now'
     provider: '{{ provider }}'
   when: perform_upgrade
 
