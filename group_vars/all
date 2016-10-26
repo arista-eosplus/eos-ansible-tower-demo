@@ -14,8 +14,8 @@ provider:
 pause_sec: 5
 
 # TFTP Server
-tftp_srv: 'tftp:172.16.130.200/'
-config_dir: 'configs/'
+tftp_srv: 'tftp:172.16.130.200'
+config_dir: '/configs/'
 base_config: 'flash:config.default'
 
 # Upgrade related vars
