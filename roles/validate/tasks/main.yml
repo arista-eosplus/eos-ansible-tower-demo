@@ -4,7 +4,7 @@
 - name: Gather EOS Hostname
   eos_command:
     commands:
-      - 'show hostname'
+      - 'show hostname | json'
     provider: '{{ provider }}'
   register: showhostname
 
@@ -16,7 +16,7 @@
 - name: Gather Show Version Facts
   eos_command:
     commands:
-      - 'show version'
+      - 'show version | json'
     provider: '{{ provider }}'
   register: showvers
 
@@ -29,7 +29,7 @@
 - name: Gather MLAG Facts
   eos_command:
     commands:
-      - 'show mlag'
+      - 'show mlag | json'
     provider: '{{ provider }}'
   register: showmlag
   when: mlag is defined
@@ -47,7 +47,7 @@
 - name: Gather VARP Facts
   eos_command:
     commands:
-      - 'show ip virtual-router'
+      - 'show ip virtual-router | json'
     provider: '{{ provider }}'
   register: showvarp
   when: varp_interfaces is defined or virtual_mac_addr is defined
