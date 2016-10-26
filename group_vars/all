@@ -4,7 +4,7 @@
 
 # Connection to the devices
 provider:
-  host: '{{ inventory_hostname }}'
+  host: '{{ ansible_host }}'
   username: admin
   password: admin
   authorize: true
