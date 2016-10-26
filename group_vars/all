@@ -20,7 +20,7 @@ base_config: 'flash:config.default'
 
 # Upgrade related vars
 target_version: 4.16.7M
-swi_url: "{{ tftp_srv }}/swi/EOS-{{ target_version }}.swi"
+swi_url: "flash:EOS-{{ target_version }}.swi"
 swi_dest: "flash:"
 install_pause: 90
 
