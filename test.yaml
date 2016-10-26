@@ -1,7 +1,0 @@
----
-- hosts: leaf
-  gather_facts: no
-  connection: local
-
-  tasks:
-    - shell: python -c 'import paramiko'
