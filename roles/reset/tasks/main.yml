@@ -3,4 +3,5 @@
   eos_command:
     commands:
       - 'configure replace {{ base_config }}'
+      - 'write memory'
     provider: '{{ provider }}'

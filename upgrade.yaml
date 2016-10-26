@@ -1,9 +1,7 @@
 ---
-- hosts: "{{ upgrade_hosts | default('all') }}"
+- hosts: "{{ upgrade_hosts | mandatory }}"
   gather_facts: no
   connection: local
-  environment:
-    PYTHONPATH: '/usr/local/lib/python2.7/dist-packages/'
 
   roles:
     - upgrade
