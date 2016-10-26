@@ -31,6 +31,7 @@
   when: perform_upgrade
 
 - pause: seconds=5
+  when: perform_upgrade
 
 - name: Gather Show Version Facts
   eos_command:
@@ -38,8 +39,10 @@
       - 'show version | json'
     provider: '{{ provider }}'
   register: showvers_post
+  when: perform_upgrade
 
 - name: Check EOS Version
   assert:
     that:
       - "'{{ target_version }}' in showvers_post['stdout'][0]['version']"
+  when: perform_upgrade
