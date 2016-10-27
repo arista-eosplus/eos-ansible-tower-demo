@@ -1,24 +1,16 @@
 ---
-- name: Gather Routing Table
-  eos_command:
-    commands:
-      - 'show ip route summary'
-    provider: '{{ provider }}'
-  register: routeoutput
-
-- name: Check Route Table Output
-  assert:
-    that:
-      "0 < routeoutput['stdout'][0]['totalRoutes']"
+- name: Gather IPs from Host vars
+  set_fact:
+    ips: '{{ ansible_play_hosts | gather_ips(hostvars) }}'
 
 - name: Run Ping tests
   eos_command:
     commands:
-      - 'ping {{ item.value.address }} repeat 1'
+      - 'ping {{ item.address }} repeat 1'
     provider: '{{ provider }}'
-  with_dict: "{{ interfaces }}"
+  with_items: "{{ ips }}"
   register: pingresults
-  
+
 - name: Validate Ping Tests
   assert:
     that:

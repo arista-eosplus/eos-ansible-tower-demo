@@ -1,13 +1,2 @@
 ---
 # vars file for interfaces
-interfaces:
-  dc1-spine1:
-    name: dc1-spine1-loop0
-    address: 1.1.1.1
-    name: dc1-spine1-loop1
-    address: 2.2.2.1
-  dc1-spine2:
-    name: dc1-spine2-loop0
-    address: 1.1.1.2
-    name: dc1-spine2-loop1
-    address: 2.2.2.2
