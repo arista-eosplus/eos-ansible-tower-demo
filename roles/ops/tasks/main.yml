@@ -5,4 +5,12 @@
       - 'show ip route'
     provider: '{{ provider }}'
   register: routeoutput
+- name: Run Ping tests`
+  eos_command:
+    commands:
+      - 'ping {{ item.ip_interfaces.address }} repeat 1'
+    provider: '{{ provider }}'
+    with_dict: '{{ inventory_hosts }}'
+  register: pingresults
+ 
   
