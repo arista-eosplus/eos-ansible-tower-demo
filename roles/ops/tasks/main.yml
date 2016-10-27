@@ -11,18 +11,3 @@
     that:
       "0 < routeoutput['stdout'][0]['totalRoutes']"
 
-- name: Run Ping tests
-  eos_command:
-    commands:
-      - 'ping {{ item.value.address }} repeat 1'
-    provider: '{{ provider }}'
-  with_dict: "{{ interfaces }}"
-  register: pingresults
-  
-- name: Validate Ping Tests
-  assert:
-    that:
-        "'0% packet loss' in {{item.value.stdout.messages}}"
-
-    msg: "Packet Loss seen"
-  with_dict: "{{ pingresults }}"
