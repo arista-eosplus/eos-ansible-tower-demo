@@ -34,15 +34,15 @@
   register: showmlag
   when: mlag is defined
 
-- name: Check MLAG Configuration
-  assert:
-    that:
-      - "'{{ mlag.local_if_vlan}}' == showmlag['stdout'][0]['localInterface']"
-      - "'{{ mlag.peer_link_if }}' == showmlag['stdout'][0]['peerLink']"
-      - "'active' == showmlag['stdout'][0]['state']"
-      - "'connected' == showmlag['stdout'][0]['negStatus']"
-      - "'up' == showmlag['stdout'][0]['peerLinkStatus']"
-  when: mlag is defined
+#- name: Check MLAG Configuration
+# assert:
+#    that:
+#      - "'{{ mlag.local_if_vlan}}' == showmlag['stdout'][0]['localInterface']"
+#      - "'{{ mlag.peer_link_if }}' == showmlag['stdout'][0]['peerLink']"
+#      - "'active' == showmlag['stdout'][0]['state']"
+#      - "'connected' == showmlag['stdout'][0]['negStatus']"
+#      - "'up' == showmlag['stdout'][0]['peerLinkStatus']"
+#  when: mlag is defined
 
 - name: Gather VARP Facts
   eos_command:
