@@ -1,0 +1,8 @@
+---
+- name: Gather Routing Table
+  eos_command:
+    commands:
+      - 'show ip route'
+    provider: '{{ provider }}'
+  register: routeoutput
+  
