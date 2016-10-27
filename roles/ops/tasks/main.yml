@@ -9,7 +9,7 @@
 - name: Run Ping tests
   eos_command:
     commands:
-      - 'ping {{ item.ip_interfaces.address }} repeat 1'
+      - 'ping {{ item.value.address }} repeat 1'
     provider: '{{ provider }}'
-    with_dict: '{{ inventory_hosts }}'
-  register: pingresults  
+  with_dict: "{{ interfaces }}"
+  register: pingresults
