@@ -2,7 +2,7 @@
 - name: Gather Routing Table
   eos_command:
     commands:
-      - 'show ip route'
+      - 'show ip route summary'
     provider: '{{ provider }}'
   register: routeoutput
 
@@ -13,3 +13,9 @@
     provider: '{{ provider }}'
     with: '{{ inventory_hosts }}'
   register: pingresults  
+
+- name: Check Route Table Output
+  assert:
+    that:
+      "0 < routeoutput['stdout'][0]['totalRoutes']"
+
