@@ -5,6 +5,16 @@ import re
 def split_lines(value):
     return [s.strip() for s in value.splitlines()]
 
+def filter_vms(value, test_vlan):
+    output = []
+    try:
+        for vm in value['item']['vms']:
+            if vm['vlan'] == test_vlan:
+                output.append(vm)
+    except:
+        pass
+    return output
+
 
 def format_commands(value, encoding='json'):
     commands = split_lines(value)
@@ -42,4 +52,5 @@ class FilterModule(object):
             'format_commands': format_commands,
             'format_stdout': format_stdout,
             'packet_loss': get_packet_loss,
+            'filter_vms': filter_vms,
         }

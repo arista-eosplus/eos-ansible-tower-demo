@@ -1,0 +1,13 @@
+--- 
+bugs: 
+    command_info:
+       cmd: "show vrrp brief"
+       key: "virtualRouters"
+       attr: "interface"
+    name: BUG172152
+    platform: 
+      - 7280
+    versions: 
+      - 4.17
+    output: . 
+

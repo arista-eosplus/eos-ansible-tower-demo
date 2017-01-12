@@ -6,6 +6,14 @@
     provider: '{{ provider }}'
   register: routeoutput
 
+- name: Run Ping tests
+  eos_command:
+    commands:
+      - 'ping {{ item.ip_interfaces.address }} repeat 1'
+    provider: '{{ provider }}'
+    with: '{{ inventory_hosts }}'
+  register: pingresults  
+
 - name: Check Route Table Output
   assert:
     that:

@@ -1,0 +1,7 @@
+---
+- hosts: webinar_lab
+  gather_facts: no
+  connection: local
+
+  roles:
+    - bug_scrub
