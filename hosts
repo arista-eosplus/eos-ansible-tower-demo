@@ -9,3 +9,6 @@ dc1-spine2
 [bug_demo_group]
 lf321.nh.aristanetworks.com
 cd262.sjc.aristanetworks.com
+
+[vmtracer]
+rtp-rack20-tor01.aristanetworks.com
