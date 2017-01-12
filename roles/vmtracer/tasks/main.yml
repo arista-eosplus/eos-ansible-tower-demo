@@ -17,7 +17,8 @@
     - name: Find VM by mac addresss
       eos_command:
          commands:
-            - 'show vmtracer vm mac {{ vm_mac }} '
+            - 'show vmtracer vm mac {{ vm_mac }}'
+            
          provider: "{{ provider }}"
       register: vmmac
 
@@ -35,20 +36,19 @@
         provider: "{{ provider }}"
       register: vmint
       when: '"vlan" not in "{{ int_vlan }}"'
-     
-    - name: Find VMs on specfic vlans
-      eos_command:
-        commands:
-          - 'show vmtracer vm detail'
-        provider: " {{ provider }} "
-      register: vmvlan
-      when: '"vlan" in "{{ int_vlan }}"'
 
+    - name: Find VMs on a given vlan
+      eos_command:
+         commands:
+            - 'show vmtracer vm'
+         provider: "{{ provider }}"
+      register: vmint
+      when: '"vlan" in "{{ int_vlan }}"'
+    
     - debug:
-        var: vmint['stdout'][0]['intfs']
-      when: 
-       - vmint
-       - "{{ vmint['stdout'][0]['intfs'] | length }}"
+        var: "{{ item | filter_vms }}"
+      with_items: "{{ vmint['stdout'][0] }}"
+  
 
   when: ' "{{ int_vlan }}" != "none"'
 
