@@ -1,0 +1,7 @@
+---
+- hosts: bug_demo_group
+  gather_facts: no
+  connection: local
+
+  roles:
+    - bug_scrub

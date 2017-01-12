@@ -6,10 +6,11 @@
 provider:
   host: '{{ ansible_host }}'
   username: admin
-  password: admin
+  password: 
   authorize: true
-  use_ssl: no
+  use_ssl: yes
   transport: eapi
+  validate_certs: false
 
 pause_sec: 5
 
@@ -23,7 +24,6 @@ target_version: 4.16.7M
 swi_url: "flash:EOS-{{ target_version }}.swi"
 swi_dest: "flash:"
 install_pause: 90
-
 
 eos_debug: true
 

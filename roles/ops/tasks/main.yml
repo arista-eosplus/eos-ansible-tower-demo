@@ -11,5 +11,5 @@
     commands:
       - 'ping {{ item.ip_interfaces.address }} repeat 1'
     provider: '{{ provider }}'
-    with_dict: '{{ inventory_hosts }}'
+    with: '{{ inventory_hosts }}'
   register: pingresults  
