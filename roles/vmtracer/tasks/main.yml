@@ -1,0 +1,12 @@
+---
+- name: Find VM by name
+  eos_command:
+     commands:
+        - 'show vmtracer vm name "{{ vm_name }} "'
+     provider: "{{ provider }}"
+  register: vmname
+  when: '"{{ vm_name }}" != none'
+
+- debug:
+     var: vmname
+  when: "{{ vmname['stdout'][0]['vms'] | length }}"   

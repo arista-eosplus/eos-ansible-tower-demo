@@ -1,0 +1,16 @@
+---
+- hosts: webinar_lab
+  gather_facts: no
+  connection: local
+  
+  vars_prompt:
+  - name: "vm_name"
+    prompt: "Name of VM (enter N/A if unknown)"
+    private: no
+
+  - name: "vm_mac"
+    prompt: "MAC address of VM"
+    private: no
+
+  roles:
+    - vmtracer

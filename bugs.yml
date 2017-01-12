@@ -1,5 +1,5 @@
 ---
-- hosts: bug_demo_group
+- hosts: webinar_lab
   gather_facts: no
   connection: local
 
