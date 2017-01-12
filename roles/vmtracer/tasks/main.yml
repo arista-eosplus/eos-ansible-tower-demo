@@ -43,12 +43,15 @@
             - 'show vmtracer vm'
          provider: "{{ provider }}"
       register: vmint
-      when: '"vlan" in "{{ int_vlan }}"'
-    
+
+    - set_fact: 
+        check: "{{int_vlan}}" 
+        output: "{{ vmint.stdout[0] }}"
+      when: '"{{ vmint }}"  is defined'
+
     - debug:
-        var: "{{ item | filter_vms }}"
-      with_items: "{{ vmint['stdout'][0] }}"
-  
+        var: "{{ item | filter_vms(check) }}"
+      with_dict: "{{ output }}"
 
   when: ' "{{ int_vlan }}" != "none"'
 
