@@ -1,0 +1,34 @@
+---
+- hosts: "{{ run_hosts | mandatory }}"
+  gather_facts: no
+  connection: local
+
+  tasks:
+    - name: Gather System Status
+      eos_command:
+        commands:
+          - command: 'show logging alerts last 25 hours'
+            output: 'text'
+          - command: 'show interfaces counters discards'
+            output: 'json'
+          - command: 'show interfaces counters discards | nz'
+            output: 'text'
+        provider: '{{ provider }}'
+      register: status
+
+    - debug: var=status
+
+    - name: Check for Alerts
+      assert:
+        that:
+          - "status['stdout'][0] == ''"
+        msg: "Alerts were found {{ status['stdout'][0] }}"
+      ignore_errors: yes
+
+    - name: Check for Discards
+      assert:
+        that:
+          - "status['stdout'][1]['inDiscardsTotal'] == 0"
+          - "status['stdout'][1]['outDiscardsTotal'] == 0"
+        msg: "Interface discards found. In {{ status['stdout'][1]['inDiscardsTotal'] }}, Out {{ status['stdout'][1]['outDiscardsTotal'] }}"
+      ignore_errors: yes

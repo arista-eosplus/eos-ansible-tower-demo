@@ -1,0 +1,15 @@
+---
+- hosts: "{{ run_hosts | mandatory }}"
+  gather_facts: no
+  connection: local
+
+  tasks:
+    - name: Run Specified Commands
+      eos_command:
+        commands: '{{ run_commands | format_commands(encoding) }}'
+        provider: '{{ provider }}'
+      register: commands_out
+
+    - set_fact: output='{{ commands_out['stdout'] | format_stdout(run_commands | format_commands(encoding)) }}'
+
+    - debug: var=output
