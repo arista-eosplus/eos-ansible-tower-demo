@@ -5,11 +5,18 @@
   
   vars_prompt:
   - name: "vm_name"
-    prompt: "Name of VM (enter N/A if unknown)"
+    prompt: "Name of VM (enter none to skip)"
+    default: "none"
     private: no
 
   - name: "vm_mac"
-    prompt: "MAC address of VM"
+    prompt: "MAC address of VM (enter none to skip)"
+    default: "none"
+    private: no
+ 
+  - name: "int_vlan"
+    prompt: "Enter interface or vlan (e.g. Ethernet3 or vlan999)"
+    default: "none"
     private: no
 
   roles:

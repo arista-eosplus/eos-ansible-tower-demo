@@ -1,12 +1,55 @@
 ---
-- name: Find VM by name
-  eos_command:
-     commands:
-        - 'show vmtracer vm name "{{ vm_name }} "'
-     provider: "{{ provider }}"
-  register: vmname
-  when: '"{{ vm_name }}" != none'
+- block:
+    - name: Find VM by name
+      eos_command:
+         commands:
+            - 'show vmtracer vm name {{ vm_name }} '
+         provider: "{{ provider }}"
+      register: vmname
 
-- debug:
-     var: vmname
-  when: "{{ vmname['stdout'][0]['vms'] | length }}"   
+    - debug:
+         var: vmname['stdout'][0]['vms']
+      when: "{{ vmname['stdout'][0]['vms'] | length }}"   
+
+  when: ' "{{ vm_name }}" != "none"'
+
+- block:
+    - name: Find VM by mac addresss
+      eos_command:
+         commands:
+            - 'show vmtracer vm mac {{ vm_mac }} '
+         provider: "{{ provider }}"
+      register: vmmac
+
+    - debug:
+         var: vmmac['stdout'][0]['vms']
+      when: "{{ vmmac['stdout'][0]['vms'] | length }}"   
+
+  when: ' "{{ vm_mac }}" != "none"'
+
+- block:
+    - name: Find VMs on a given interface
+      eos_command:
+        commands:
+           - 'show vmtracer interface {{ int_vlan }}'
+        provider: "{{ provider }}"
+      register: vmint
+      when: '"vlan" not in "{{ int_vlan }}"'
+     
+    - name: Find VMs on specfic vlans
+      eos_command:
+        commands:
+          - 'show vmtracer vm detail'
+        provider: " {{ provider }} "
+      register: vmvlan
+      when: '"vlan" in "{{ int_vlan }}"'
+
+    - debug:
+        var: vmint['stdout'][0]['intfs']
+      when: 
+       - vmint
+       - "{{ vmint['stdout'][0]['intfs'] | length }}"
+
+  when: ' "{{ int_vlan }}" != "none"'
+
+      
