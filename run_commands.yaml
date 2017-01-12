@@ -6,13 +6,10 @@
   tasks:
     - name: Run Specified Commands
       eos_command:
-        commands:
-          - command: '{{ item }}'
-            encoding: '{{ encoding }}'
+        commands: '{{ run_commands | format_commands(encoding) }}'
         provider: '{{ provider }}'
-      with_items: '{{ run_commands | split("\n") }}'
       register: commands_out
 
-    - set_fact: output={{ commands_out['stdout'] }}
+    - set_fact: output='{{ commands_out['stdout'] | format_stdout(run_commands | format_commands(encoding)) }}'
 
     - debug: var=output
