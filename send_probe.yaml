@@ -1,0 +1,20 @@
+---
+- hosts: "{{ run_hosts | mandatory }}"
+  gather_facts: no
+  connection: local
+
+  tasks:
+    - name: Send probe
+      eos_command:
+        commands:
+          - command: 'ping {{ dst }} record-route repeat {{ repeat }} size {{ size }} source {{ source }} timeout {{ timeout }}'
+            output: 'text'
+        provider: '{{ provider }}'
+      register: ping_result
+
+    - set_fact: loss='{{ ping_result['stdout'][0] | packet_loss }}'
+
+    - assert:
+        that:
+          - "loss == '0'"
+        msg: "Ping reported packet loss. {{ ping_result['stdout'][0] }}"
