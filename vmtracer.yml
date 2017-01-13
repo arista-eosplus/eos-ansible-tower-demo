@@ -70,7 +70,7 @@
       register: counters
       when: 'interface is defined and "{{ run_check }}" == "Yes"'
 
-    - debug: var="{{ counters.stdout }}"
+    - debug: var="{{ counters['stdout'] }}"
       when: 'interface is defined and "{{ run_check }}" == "Yes"'
 
     - name: Run config check
