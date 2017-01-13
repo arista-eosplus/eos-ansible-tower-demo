@@ -6,7 +6,7 @@
 provider:
   host: '{{ ansible_host }}'
   username: admin
-  password: 
+  password:
   authorize: true
   use_ssl: yes
   transport: eapi

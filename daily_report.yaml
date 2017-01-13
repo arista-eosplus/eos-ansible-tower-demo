@@ -16,8 +16,6 @@
         provider: '{{ provider }}'
       register: status
 
-    - debug: var=status
-
     - name: Check for Alerts
       assert:
         that:

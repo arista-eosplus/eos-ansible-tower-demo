@@ -10,3 +10,7 @@ dc1-spine2
 lf321.nh.aristanetworks.com
 cd262.sjc.aristanetworks.com
 rtp-rack20-tor01.aristanetworks.com
+
+[test]
+Spine01
+Spine02
