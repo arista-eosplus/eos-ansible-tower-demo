@@ -2,15 +2,32 @@
 - hosts: webinar_lab
   gather_facts: no
   connection: local
-
+  
+  vars:
+    id: cvp-veos3
+    id_type: "vm_name"
+    run_check: "Yes"
+  
   tasks:
-    - name: Find VM by name
-      eos_command:
-         commands:
-            - command: 'show vmtracer vm name {{ id }}'
-              output: 'json'
-         provider: "{{ provider }}"
-      register: output
+    - block:
+        - name: Find VM by name
+          eos_command:
+             commands:
+                - command: 'show vmtracer vm name {{ id }}'
+                  output: 'json'
+             provider: "{{ provider }}"
+          register: output
+
+        - set_fact:
+             info: "{{ output.stdout[0]['vms'][0] }}"    
+             interface: "{{ output.stdout[0]['vms'][0]['interface'] }}"
+             vlan: "{{ output.stdout[0]['vms'][0]['vlan'] }}"
+
+          when: "{{ output.stdout[0]['vms'] | length }}"
+
+        - debug: var=info 
+          when: "{{ output.stdout[0]['vms'] | length }}"
+        
       when: '"{{ id_type }}" == "vm_name"'
 
     - name: Find VM by Mac Addresss
@@ -44,3 +61,43 @@
         - debug: var=filtered
 
       when: ' "{{ id_type }}" == "vlan"'
+
+    - name: Run Health Check
+      eos_command:
+        commands:
+           - command: 'show interfaces {{ interface }} counters errors'
+             output: 'json'
+           - command: 'show interfaces {{ interface }} counters discards'
+             output: 'json'
+           - command: 'show interfaces {{ interface }} counters rates'
+             output: 'json'
+        provider: "{{ provider }}"
+      register: counters
+      when: 'interface is defined and "{{ run_check }}" == "Yes"'
+      
+    - debug: var=item
+      with_items: "{{ counters.stdout }}"
+      when: 'interface is defined and "{{ run_check }}" == "Yes"'
+
+    - name: Run config check
+      eos_command:
+         commands:
+            - command: 'show interfaces {{ interface }} trunk'
+              output: 'json'
+         provider: "{{ provider }}"
+      register: configout
+      when: 'interface is defined and "{{ run_check }}" == "Yes"' 
+
+    - set_fact:
+         trunkvlans: " {{configout.stdout[0]['trunks'][interface]['forwardingVlans']['vlanIds'] }}" 
+      when: 'configout is defined and interface is defined'
+
+    - assert:
+         that:
+            - '{{ vlan }} is in {{ trunkvlans }}'  
+      when: 'configout is defined and interface is defined'
+
+         
+
+
+
