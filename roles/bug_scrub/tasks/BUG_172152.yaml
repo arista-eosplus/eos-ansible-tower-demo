@@ -1,0 +1,27 @@
+---
+- name: Gather show version output
+  eos_command:
+   commands:
+    - 'show version'
+   provider: "{{ provider }}"
+  register: showver
+
+- set_fact:
+  bug_applies: "'4.17' in {{ showver['stdout'][0]['version'] and '7280' in showver['stdout'][0]['modelName'] }}"
+
+- block:
+   - name: Run bug verification command
+     eos_command:
+       commands:
+          - 'show vrrp brief'
+       provider: "{{ provider }}"
+     register: bugout
+
+   - name: Comparing bug output
+     assert:
+       that:
+         - "'.' not in {{ item['interface'] }}"
+       msg: 'This host IS a candiate for BUG_172152.'
+     with_items: "{{ bugout['stdout'][0]['virtualRouters'] }}"
+
+  when: "{{ bug_applies }}"
