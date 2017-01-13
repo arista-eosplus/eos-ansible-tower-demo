@@ -73,7 +73,7 @@
     - debug: var=counters.stdout
       when: 'interface is defined and "{{ run_check }}" == "Yes"'
 
-    - name: Run config check
+    - name: Gather Vlans Allowed on this Interface's Trunk
       eos_command:
          commands:
             - command: 'show interfaces {{ interface }} trunk'
