@@ -70,7 +70,7 @@
       register: counters
       when: 'interface is defined and "{{ run_check }}" == "Yes"'
 
-    - debug: var="{{ counters['stdout'] }}"
+    - debug: var=counters.stdout
       when: 'interface is defined and "{{ run_check }}" == "Yes"'
 
     - name: Run config check
@@ -90,5 +90,5 @@
       assert:
         that:
           - '{{ vlan }} in {{ trunkvlans }}'
-        msg: 'Vlan {{ vlan }} is NOT configured on interface {{ interface }}. Add this as a trunk allowed Vlan will provide connectivity.'
+        msg: 'Vlan {{ vlan }} is NOT configured on interface {{ interface }}. Adding this as a trunk allowed Vlan will provide connectivity.'
       when: 'configout is defined and interface is defined'
