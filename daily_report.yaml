@@ -21,7 +21,6 @@
         that:
           - "status['stdout'][0] == ''"
         msg: "Alerts were found {{ status['stdout'][0] }}"
-      ignore_errors: yes
 
     - name: Check for Discards
       assert:
@@ -29,4 +28,3 @@
           - "status['stdout'][1]['inDiscardsTotal'] == 0"
           - "status['stdout'][1]['outDiscardsTotal'] == 0"
         msg: "Interface discards found. In {{ status['stdout'][1]['inDiscardsTotal'] }}, Out {{ status['stdout'][1]['outDiscardsTotal'] }}"
-      ignore_errors: yes
