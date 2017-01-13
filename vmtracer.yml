@@ -3,11 +3,6 @@
   gather_facts: no
   connection: local
   
-  vars:
-    id: cvp-veos3
-    id_type: "vm_name"
-    run_check: "Yes"
-  
   tasks:
     - block:
         - name: Find VM by name
