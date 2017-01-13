@@ -1,3 +1,13 @@
 ---
 eos_purge_vlans: no
 eos_ip_routing_enabled: yes
+
+# Connection to the devices
+provider:
+  host: '{{ ansible_host }}'
+  username: admin
+  password: admin
+  authorize: true
+  use_ssl: no
+  transport: eapi
+  validate_certs: false
