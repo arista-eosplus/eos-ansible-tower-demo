@@ -86,7 +86,9 @@
          trunkvlans: " {{configout.stdout[0]['trunks'][interface]['forwardingVlans']['vlanIds'] }}"
       when: 'configout is defined and interface is defined'
 
-    - assert:
-         that:
-            - '{{ vlan }} in {{ trunkvlans }}'
+    - name: Check that the VM's Portgroup Vlan is configured on the Ethernet Interface
+      assert:
+        that:
+          - '{{ vlan }} in {{ trunkvlans }}'
+        msg: 'Vlan {{ vlan }} is NOT configured on interface {{ interface }}. Add this as a trunk allowed Vlan will provide connectivity.'
       when: 'configout is defined and interface is defined'
