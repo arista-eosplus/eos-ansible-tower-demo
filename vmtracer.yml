@@ -2,7 +2,7 @@
 - hosts: webinar_lab
   gather_facts: no
   connection: local
-  
+
   tasks:
     - block:
         - name: Find VM by name
@@ -14,15 +14,15 @@
           register: output
 
         - set_fact:
-             info: "{{ output.stdout[0]['vms'][0] }}"    
+             info: "{{ output.stdout[0]['vms'][0] }}"
              interface: "{{ output.stdout[0]['vms'][0]['interface'] }}"
              vlan: "{{ output.stdout[0]['vms'][0]['vlan'] }}"
 
           when: "{{ output.stdout[0]['vms'] | length }}"
 
-        - debug: var=info 
+        - debug: var=info
           when: "{{ output.stdout[0]['vms'] | length }}"
-        
+
       when: '"{{ id_type }}" == "vm_name"'
 
     - name: Find VM by Mac Addresss
@@ -69,9 +69,8 @@
         provider: "{{ provider }}"
       register: counters
       when: 'interface is defined and "{{ run_check }}" == "Yes"'
-      
-    - debug: var=item
-      with_items: "{{ counters.stdout }}"
+
+    - debug: var="{{ counters.stdout }}"
       when: 'interface is defined and "{{ run_check }}" == "Yes"'
 
     - name: Run config check
@@ -81,18 +80,13 @@
               output: 'json'
          provider: "{{ provider }}"
       register: configout
-      when: 'interface is defined and "{{ run_check }}" == "Yes"' 
+      when: 'interface is defined and "{{ run_check }}" == "Yes"'
 
     - set_fact:
-         trunkvlans: " {{configout.stdout[0]['trunks'][interface]['forwardingVlans']['vlanIds'] }}" 
+         trunkvlans: " {{configout.stdout[0]['trunks'][interface]['forwardingVlans']['vlanIds'] }}"
       when: 'configout is defined and interface is defined'
 
     - assert:
          that:
-            - '{{ vlan }} is in {{ trunkvlans }}'  
+            - '{{ vlan }} in {{ trunkvlans }}'
       when: 'configout is defined and interface is defined'
-
-         
-
-
-
