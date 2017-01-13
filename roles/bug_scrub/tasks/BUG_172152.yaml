@@ -7,21 +7,21 @@
   register: showver
 
 - set_fact:
-  bug_applies: "'4.17' in {{ showver['stdout'][0]['version'] and '7280' in showver['stdout'][0]['modelName'] }}"
+    bug_applies: "{{'4.17' in showver['stdout'][0]['version'] and '7280' in showver['stdout'][0]['modelName'] }}"
+    key: interface
+    attr: virtualRouters
 
-- block:
-   - name: Run bug verification command
-     eos_command:
-       commands:
-          - 'show vrrp brief'
-       provider: "{{ provider }}"
-     register: bugout
+- name: Gathering VRRP Information
+  eos_command:
+    commands:
+      - 'show vrrp brief'
+    provider: "{{ provider }}"
+  register: bugout
 
-   - name: Comparing bug output
-     assert:
-       that:
-         - "'.' not in {{ item['interface'] }}"
-       msg: 'This host IS a candiate for BUG_172152.'
-     with_items: "{{ bugout['stdout'][0]['virtualRouters'] }}"
-
+- name: Checking for Sub-Interfaces
+  assert:
+    that:
+      - "'.' not in '{{ item[key] }}' "
+    msg: 'This host IS a candidate for BUG_172152 because it is a 7280 running 4.17.x. and has a sub-interface configured with VRRP. Please schedule this switch to be upgraded to 4.17.5F.'
+  with_items: "{{ bugout['stdout'][0][attr] | default([]) }}"
   when: "{{ bug_applies }}"
