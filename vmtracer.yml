@@ -3,6 +3,10 @@
   gather_facts: no
   connection: local
 
+  vars:
+    id_type: vlan
+    id: 'vlan999'
+
   tasks:
     - name: Find VM by name
       eos_command:
