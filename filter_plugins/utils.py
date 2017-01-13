@@ -5,14 +5,13 @@ import re
 def split_lines(value):
     return [s.strip() for s in value.splitlines()]
 
-def filter_vms(value, test_vlan):
+
+def filter_vms(value, id):
     output = []
-    try:
-        for vm in value['item']['vms']:
-            if vm['vlan'] == test_vlan:
-                output.append(vm)
-    except:
-        pass
+    for vm in value['vms']:
+        vlan = re.sub(r'[v|V]lan', '', id)
+        if vm['vlan'] == vlan:
+            output.append(vm)
     return output
 
 

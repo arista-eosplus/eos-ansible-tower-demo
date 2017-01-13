@@ -2,22 +2,45 @@
 - hosts: webinar_lab
   gather_facts: no
   connection: local
-  
-  vars_prompt:
-  - name: "vm_name"
-    prompt: "Name of VM (enter none to skip)"
-    default: "none"
-    private: no
 
-  - name: "vm_mac"
-    prompt: "MAC address of VM (enter none to skip)"
-    default: "none"
-    private: no
- 
-  - name: "int_vlan"
-    prompt: "Enter interface or vlan (e.g. Ethernet3 or vlan999)"
-    default: "none"
-    private: no
+  tasks:
+    - name: Find VM by name
+      eos_command:
+         commands:
+            - command: 'show vmtracer vm name {{ id }}'
+              output: 'json'
+         provider: "{{ provider }}"
+      register: output
+      when: '"{{ id_type }}" == "vm_name"'
 
-  roles:
-    - vmtracer
+    - name: Find VM by Mac Addresss
+      eos_command:
+         commands:
+            - command: 'show vmtracer vm mac {{ id }}'
+              output: 'json'
+         provider: "{{ provider }}"
+      register: vmmac
+      when: '"{{ id_type }}" == "mac_address"'
+
+    - name: Find VMs on a Given Interface
+      eos_command:
+        commands:
+           - 'show vmtracer interface {{ id }}'
+        provider: "{{ provider }}"
+      register: vmint
+      when: '"{{ id_type }}" == "interface"'
+
+    - block:
+        - name: Find VMs on a given vlan
+          eos_command:
+             commands:
+                - 'show vmtracer vm'
+             provider: "{{ provider }}"
+          register: vms
+
+        - set_fact:
+            filtered: "{{ vms.stdout[0] | filter_vms(id) }}"
+
+        - debug: var=filtered
+
+      when: ' "{{ id_type }}" == "vlan"'
