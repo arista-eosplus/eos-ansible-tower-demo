@@ -6,7 +6,6 @@ Install the needed roles by creating a text file:
 
 ```
 # roles.txt
-arista.eos
 arista.eos-bgp
 arista.eos-bridging
 arista.eos-interfaces
