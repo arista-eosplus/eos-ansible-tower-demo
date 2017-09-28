@@ -2,7 +2,7 @@
 # make ansible play nice in a virtualenv
 # ansible_python_interpreter: python
 
-# Connection to the devices
+# Connection to the devices - Micah make sure you update this to match your seetings
 provider:
   host: '{{ ansible_host }}'
   username: admin
@@ -20,8 +20,9 @@ config_dir: '/configs/'
 base_config: 'flash:config.default'
 
 # Upgrade related vars
-target_version: 4.16.7M
-swi_url: "flash:EOS-{{ target_version }}.swi"
+target_version: 4.19.1F
+# Micah - make sure the URL is update to the correct location
+swi_url: "http://<host>/EOS-{{ target_version }}.swi"
 swi_dest: "flash:"
 install_pause: 90
 
