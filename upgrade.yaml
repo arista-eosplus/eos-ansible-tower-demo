@@ -1,5 +1,5 @@
 ---
-- hosts: "{{ upgrade_hosts | mandatory }}"
+- hosts: all
   gather_facts: no
   connection: local
 
