@@ -26,7 +26,7 @@ The above command will install the need roles required to run the play book.
 ansible-playbook -i hosts site.yml
 ```
 
-The ```site.yml`` playbook is divided into to two child playbooks ```spine.yml``` and ```leaf.yml```.  As their name implies ```spine.yml``` will run against hosts in the spine group and ```leaf.yml``` will run against hosts in the leaf group.
+The ```site.yml``` playbook is divided into to two child playbooks ```spine.yml``` and ```leaf.yml```.  As their name implies ```spine.yml``` will run against hosts in the spine group and ```leaf.yml``` will run against hosts in the leaf group.
 
 To feed the correct IP addresses/username/acls into the play change the requiste host_var or group_var file to meet your needs.
 
